@@ -13,12 +13,12 @@
 
 ## ⚙️ Phase 1 — Commandes essentielles
 - [x] Ajouter `packx help` (liste des commandes)
-- [-] Ajouter `packx version`
+- [ ] Ajouter `packx version`
 <!-- manque la structure des paquets de Packx dans lequel on aura cette info ainsi que d'autres -->
 - [x] Ajouter `pacck search` (fair la fonction de vérif indépendamment pour l'utiliser dans d'autre fonction)
-- [ ] Ajouter gestion des erreurs propre
+- [x] Ajouter gestion des erreurs propre
 - [x] Ajouter descriptions dans `commands[]`
-- [ ] Améliorer les messages CLI
+- [x] Améliorer les messages CLI
 
 ---
 
