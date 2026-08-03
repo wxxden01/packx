@@ -1,25 +1,31 @@
 #ifndef INIT_H
 #define INIT_H
 
-int is_dir(const char *chemin);
+// Types d'entrées à vérifier
+typedef enum {
+    ENTRY_DIR,
+    ENTRY_FILE
+} EntryType;
+
+// Structure de l'arbo
+typedef struct
+{
+    const char *rel_path;
+    EntryType type;
+} SchemaEntry;
 
 /**
- * @brief Créer le répertoire source si non présent.
- * @param dir Chemin du répertoire
- * @return Erreur en cas d'échec, confirmation en cas de création du répertoire
+ * @brief Construit le chemin complet et créer le répertoire / fichier si non créer
+ * @param base_dir répertoire de base de Packx
+ * @param entry arborescence (struct)
+ * @return Succés ou erreur
  */
-int init_source_dir(const char *dir);
+int check_or_create_entry(const char *base_dir, const SchemaEntry *entry);
 
 /**
- * @brief Créer le fichier de bdd si non présent.
- * @param file chemin + nom du fichier.
- * @return erreur en cas d'échec.
- */
-int init_db(const char *file);
-
-/**
- * @brief Vérifie l'intégrité de Packx
- * @return 1 si un processus echoue, 0 si tout c'est bien passé
+ * @brief Vérifie et créer l'arborescence si nécessaire 
+ * @param void
+ * @return Succés ou erreur
  */
 int init_packx(void);
 
