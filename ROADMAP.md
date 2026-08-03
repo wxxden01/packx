@@ -32,10 +32,11 @@
 ---
 
 ## 🗂️ Phase 3 — Système de stockage
-- [ ] Créer dossier `~/.packx/`
-- [ ] Créer fichier `installed.json` ou `.db`
+- [x] Créer dossier `~/.packx/`
+- [x] Créer fichier `installed.json` ou `.db`
+- [x] Créer `init.c` pour build les dossiers/fichiers à la compilication
 - [ ] Lire/écrire des fichiers en C
-- [ ] Parser données (JSON ou format simple)
+- [ ] Parser les données de la db
 
 ---
 

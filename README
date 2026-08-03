@@ -1,8 +1,7 @@
 ## Compilation
 
-```bash
+``` bash
 make
 cd build/
 
 ./rex test
-```

@@ -2,6 +2,7 @@
 NAME = packx
 
 # Dossiers
+APP_DIR = ~/.packx/
 BUILD_DIR = build
 OBJ_DIR = $(BUILD_DIR)/obj
 BIN = $(BUILD_DIR)/$(NAME)

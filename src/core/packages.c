@@ -2,7 +2,8 @@
 #include <string.h>
 
 // TEMPORAIRE, a terme faire la liste des paquets installés de puis le dossier ~/.db
-const char *available_packages[] = {
+const char *available_packages[] = 
+{
     "htop",
     "vim",
     "git",
