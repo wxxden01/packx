@@ -1,8 +1,11 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "version.h"
 #include "packages.h"
 #include "commands.h"
+
+#define PATH_MAX_LEN 256
 
 int packx_help(int argc, char **argv)
 {
@@ -26,7 +29,13 @@ int packx_help(int argc, char **argv)
         printf("\nDéveloppeurs du projet : \nRudy DANIEL - @WXXDEN\nYmad Eddine HASSIN-BOUKAL - @zanblue\n");
     }
     else{
-        if (db_pkg_reader("~/.packx/installed.db", argv[2]) == 0)
+        const char *home = getenv("HOME");
+        if (!home) return -1;
+
+        char db_file[PATH_MAX_LEN];
+        snprintf(db_file, sizeof(db_file), "%s/.packx/installed.db", home);
+
+        if (db_pkg_reader(db_file, argv[2]) == 0)
         {
             printf("Aide demandé pour le paquet: %s\n", argv[2]);
             return 0;
