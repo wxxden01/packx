@@ -26,7 +26,7 @@ int packx_help(int argc, char **argv)
         printf("\nDéveloppeurs du projet : \nRudy DANIEL - @WXXDEN\nYmad Eddine HASSIN-BOUKAL - @zanblue\n");
     }
     else{
-        if (package_exist(argv[2]))
+        if (db_pkg_reader("~/.packx/installed.db", argv[2]) == 0)
         {
             printf("Aide demandé pour le paquet: %s\n", argv[2]);
             return 0;
