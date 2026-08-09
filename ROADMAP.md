@@ -13,7 +13,7 @@
 
 ## ⚙️ Phase 1 — Commandes essentielles
 - [x] Ajouter `packx help` (liste des commandes)
-- [ ] Ajouter `packx version` <!-- manque la structure des paquets de Packx dans lequel on aura cette info ainsi que d'autres -->
+- [x] Ajouter `packx version`
 - [x] Ajouter `pacck search` (fair la fonction de vérif indépendamment pour l'utiliser dans d'autre fonction)
 - [x] Ajouter gestion des erreurs propre
 - [x] Ajouter descriptions dans `commands[]`
@@ -34,8 +34,8 @@
 - [x] Créer dossier `~/.packx/`
 - [x] Créer fichier `installed.json` ou `.db`
 - [x] Créer `init.c` check de l'arborescence
-- [ ] Lire/écrire des fichiers en C
-- [ ] Parser les données de la db
+- [x] Lire/écrire des fichiers en C
+- [x] Parser les données de la db
 
 ---
 

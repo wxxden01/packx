@@ -1,0 +1,5 @@
+
+int mirror_check()
+{
+    
+}

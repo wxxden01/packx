@@ -12,7 +12,8 @@
 static const SchemaEntry EXPECTED_STRUCTURE[] = {
     {"", ENTRY_DIR},
     {"db", ENTRY_DIR},
-    {"installed.db", ENTRY_FILE}
+    {"installed.db", ENTRY_FILE},
+    {"mirror.txt", ENTRY_FILE}
 };
 
 #define STRUCTURE_SIZE (sizeof(EXPECTED_STRUCTURE) / sizeof(EXPECTED_STRUCTURE[0]))
