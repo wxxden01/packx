@@ -1,9 +1,9 @@
-#include <stdbool.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 
 #include "packages.h"
+#include "path_builder.h"
 
 #define PATH_MAX_LEN 256
 
@@ -21,9 +21,17 @@ int parse_line(const char *line, package_t *pkg)
     return (matched == 3) ? 0 : 1;
 }
 
-int db_pkg_reader(const char *filepath, const char *target_pkg)
+int db_pkg_reader(const char *target_pkg)
 {
-    FILE *file = fopen(filepath, "r");
+    static const char *db_file = "installed.db"; 
+    
+    char *full_path = make_path(db_file);
+    if (!full_path)
+    {
+        return -1;
+    }
+    
+    FILE *file = fopen(full_path, "r");
     if (!file) {
         perror("Erreur lors de l'ouverture de la base de données");
         return -1;
@@ -39,7 +47,7 @@ int db_pkg_reader(const char *filepath, const char *target_pkg)
             if (strcmp(pkg.name, target_pkg) == 0) {
                 printf("Version de %s : %s\n", pkg.name, pkg.version);
                 found = 1;
-                break; // On a trouvé le paquet, on peut arrêter la lecture
+                break;
             }
         }
     }

@@ -2,20 +2,12 @@
 #include <stdio.h>
 
 #include "commands.h"
+#include "install.h"
 #include "help.h"
 #include "search_packx.h"
 #include "version.h"
 
 // TEMPORAIRE
-int packx_install(int argc, char **argv)
-{
-    (void)argc;
-    (void)argv;
-    printf("Test ok!\n");
-
-    return 0;
-}
-
 int packx_remove(int argc, char **argv)
 {
     (void)argc;

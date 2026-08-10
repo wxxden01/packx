@@ -8,7 +8,7 @@ typedef struct
     const char *desc;
 } command_packx;
 
-// tableau global
+// tableau des commandes associé à leurs fonctions
 extern command_packx commands[];
 
 #endif

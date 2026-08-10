@@ -21,12 +21,12 @@
 
 ---
 
-## 📦 Phase 2 — Gestion de paquets (simulation)
+## 📦 Phase 2 — Gestion de paquets
 - [ ] Implémenter `packx install <pkg>`
 - [ ] Implémenter `packx remove <pkg>`
 - [ ] Implémenter `packx list`
-- [ ] Créer une base locale (fichier `.packx/db`)
-- [ ] Stocker les paquets installés
+- [x] Créer une base locale (fichier `.packx/db`)
+- [x] Stocker les paquets installés `.packx/pkgs`
 
 ---
 
@@ -90,3 +90,6 @@
 - [ ] Cache local
 - [ ] Vérification d’intégrité (hash)
 - [ ] Signature des paquets
+
+
+# Pas besoin d'IA, un cerveau suffit!

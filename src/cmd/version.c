@@ -9,19 +9,6 @@
 
 int packx_version(int argc, char **argv)
 {
-    // 1. Correction du type : const char *
-    const char *db_file = ".packx/installed.db"; 
-    const char *home = getenv("HOME");
-    
-    if (!home) {
-        fprintf(stderr, "Erreur : Impossible de récupérer la variable $HOME.\n");
-        return -1;
-    }
-
-    // 2. Construction du chemin absolu
-    char full_path[PATH_MAX_LEN];
-    snprintf(full_path, sizeof(full_path), "%s/%s", home, db_file);
-
     // Case 1 : L'utilisateur tape juste "packx version" (2 arguments : argv[0] et argv[1])
     if (argc == 2)
     {
@@ -33,7 +20,7 @@ int packx_version(int argc, char **argv)
         const char *pkg_target = argv[2];
 
         // On passe full_path (chemin complet) et le nom du paquet recherché
-        if (db_pkg_reader(full_path, pkg_target) == 1)
+        if (db_pkg_reader(pkg_target) == 1)
         {
             printf("Paquet %s non trouvé!\n", argv[2]);
             return 1;

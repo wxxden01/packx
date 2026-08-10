@@ -18,10 +18,9 @@ int parse_line(const char *line, package_t *pkg);
 
 /**
  * @brief Lit un fichier et appelle la fonction parse_line() pour chaque ligne à la recherche du paquet demandé
- * @param filepath Chemin vers le fichier
  * @param target_pkg Le paquet demandé
  * @return Renvoie les informations du paquet
  */
-int db_pkg_reader(const char *filepath, const char *target_pkg);
+int db_pkg_reader(const char *target_pkg);
 
 #endif 

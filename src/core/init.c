@@ -12,6 +12,8 @@
 static const SchemaEntry EXPECTED_STRUCTURE[] = {
     {"", ENTRY_DIR},
     {"db", ENTRY_DIR},
+    {"cache", ENTRY_DIR},
+    {"pkgs", ENTRY_DIR},
     {"installed.db", ENTRY_FILE},
     {"mirror.txt", ENTRY_FILE}
 };

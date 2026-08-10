@@ -29,13 +29,7 @@ int packx_help(int argc, char **argv)
         printf("\nDéveloppeurs du projet : \nRudy DANIEL - @WXXDEN\nYmad Eddine HASSIN-BOUKAL - @zanblue\n");
     }
     else{
-        const char *home = getenv("HOME");
-        if (!home) return -1;
-
-        char db_file[PATH_MAX_LEN];
-        snprintf(db_file, sizeof(db_file), "%s/.packx/installed.db", home);
-
-        if (db_pkg_reader(db_file, argv[2]) == 0)
+        if (db_pkg_reader(argv[2]) == 0)
         {
             printf("Aide demandé pour le paquet: %s\n", argv[2]);
             return 0;

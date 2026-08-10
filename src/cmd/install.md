@@ -13,10 +13,11 @@
 - Upload sur le miroir
 
 ---
+
 ## Phase 1:
 - [ ] Vérifier que le paquet n'est pas déjà installé
 - [ ] Ajouter ~/.packx/cache, ~/.packx/pkgs
 - [ ] Download depuis le miroir
 - [ ] Vérifier avant tout le hash
 - [ ] Faire l'installation
-- [ ] l'inscrire dans le fichier ~/.packx/installed.db
+- [ ] l'inscrire dans le fichier ~/.packx/installed.db (format : nom|version|size)
