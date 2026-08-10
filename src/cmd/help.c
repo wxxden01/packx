@@ -1,8 +1,11 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "version.h"
 #include "packages.h"
 #include "commands.h"
+
+#define PATH_MAX_LEN 256
 
 int packx_help(int argc, char **argv)
 {
@@ -26,7 +29,7 @@ int packx_help(int argc, char **argv)
         printf("\nDéveloppeurs du projet : \nRudy DANIEL - @WXXDEN\nYmad Eddine HASSIN-BOUKAL - @zanblue\n");
     }
     else{
-        if (package_exist(argv[2]))
+        if (db_pkg_reader(argv[2]) == 0)
         {
             printf("Aide demandé pour le paquet: %s\n", argv[2]);
             return 0;
