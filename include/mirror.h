@@ -10,4 +10,6 @@ int check_mirror_list(char *full_path);
 
 int mirror_check(void);
 
+char *select_mirror(const char *file_name);
+
 #endif

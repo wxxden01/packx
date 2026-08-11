@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "mirror.h"
 #include "path_builder.h"
@@ -7,7 +8,6 @@
 int check_mirror_list(char *full_path)
 {
     FILE *file = fopen(full_path, "r");
-
     if (!file)
     {
         perror("Erreur lors de l'ouverture de la base de données");
@@ -23,6 +23,27 @@ int check_mirror_list(char *full_path)
 
     fclose(file);
     return 1;
+}
+
+char *select_mirror(const char *file_name)
+{
+    FILE *file = fopen(file_name, "r");
+    if (!file) {
+        perror("Erreur lors de l'ouverture de la base de données");
+        return NULL;
+    }
+
+    char line[256];
+    char *found_line = NULL;
+
+    while (fgets(line, sizeof(line), file)) {
+        found_line = strdup(line);
+        /*Si le mirroire répond on le prend pour installer la paquet*/
+        break;
+    }
+
+    fclose(file);
+    return found_line;
 }
 
 int mirror_check(void)
@@ -41,8 +62,15 @@ int mirror_check(void)
         return -1;
     }
 
-    printf("TOUT EST OK POUR LE MOMENT!\n");
+
+    char *mirror = select_mirror(full_path);
+    if (mirror == NULL)
+    {
+        return -1;
+    }
 
     free(full_path);
+    free(mirror);
+
     return 1;
 }
