@@ -38,13 +38,17 @@ char *select_mirror(const char *file_name)
 
     while (fgets(line, sizeof(line), file)) {
         found_line = strdup(line);
-        /*Si le mirroire répond on le prend pour installer la paquet*/
         break;
     }
 
     fclose(file);
     return found_line;
 }
+
+// int pkg_found()
+// {
+//     char *repo_file = "repo.db";
+// }
 
 int mirror_check(void)
 {

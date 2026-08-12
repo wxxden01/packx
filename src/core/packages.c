@@ -12,13 +12,15 @@ int parse_line(const char *line, package_t *pkg)
     if (!line || !pkg) return 1;
 
     // %63[^|] lit au maximum 63 caractères tant que ce n'est pas un '|'
-    // %15[^\n] lit la taille sans inclure le saut de ligne
-    int matched = sscanf(line, "%63[^|]|%15[^|]|%15[^\n]", 
+    // %32[^\n] lit la taille sans inclure le saut de ligne
+    int matched = sscanf(line, "%31[^|]|%15[^|]|%63[^|]|%15[^|]|%32[^\n]", 
                          pkg->name, 
                          pkg->version, 
-                         pkg->size);
+                         pkg->full_name,
+                         pkg->size,
+                         pkg->hash);
     
-    return (matched == 3) ? 0 : 1;
+    return (matched == 5) ? 0 : 1;
 }
 
 int db_pkg_reader(const char *target_pkg)
