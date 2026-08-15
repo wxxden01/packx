@@ -10,7 +10,7 @@ int packx_search(int argc, char **argv)
 {
     if (argc > 2)
     {
-        if (db_pkg_reader(argv[2]) == 0)
+        if (db_pkg_reader(1, argv[2]) == 0)
         {
             printf("Le paquet %s à bien été trouvé!\n", argv[2]);
             return 0;

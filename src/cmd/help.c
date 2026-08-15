@@ -29,7 +29,7 @@ int packx_help(int argc, char **argv)
         printf("\nDéveloppeurs du projet : \nRudy DANIEL - @WXXDEN\nYmad Eddine HASSIN-BOUKAL - @zanblue\n");
     }
     else{
-        if (db_pkg_reader(argv[2]) == 0)
+        if (db_pkg_reader(1, argv[2]) == 0)
         {
             printf("Aide demandé pour le paquet: %s\n", argv[2]);
             return 0;
