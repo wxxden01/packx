@@ -23,9 +23,21 @@ int parse_line(const char *line, package_t *pkg)
     return (matched == 5) ? 0 : 1;
 }
 
-int db_pkg_reader(const char *target_pkg)
+int db_pkg_reader(int source_db, const char *target_pkg)
 {
-    static const char *db_file = "installed.db"; 
+    const char *db_file = NULL;
+
+    if (source_db == 1)
+    {
+        db_file = "installed.db";
+    } 
+    else 
+    {
+        db_file = "cache/repo.db";
+    }
+    
+    // static const char *db_file = "installed.db"; 
+    // static const char *db_mirror_file = "repo.db";
     
     char *full_path = make_path(db_file);
     if (!full_path)

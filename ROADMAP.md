@@ -1,6 +1,6 @@
-# 🦖 PACKX - Package Manager (Roadmap)
+# PACKX - Package Manager (Roadmap)
 
-## 📌 Phase 0 — Base CLI (fondations)
+## Phase 0 — Base CLI (fondations)
 - [x] Parser les arguments (`argc`, `argv`)
 - [x] Gérer une commande simple (`rex test`)
 - [x] Créer une struct `command_packx`
@@ -11,7 +11,7 @@
 
 ---
 
-## ⚙️ Phase 1 — Commandes essentielles
+## Phase 1 — Commandes essentielles
 - [x] Ajouter `packx help` (liste des commandes)
 - [x] Ajouter `packx version`
 - [x] Ajouter `pacck search` (fair la fonction de vérif indépendamment pour l'utiliser dans d'autre fonction)
@@ -21,7 +21,7 @@
 
 ---
 
-## 📦 Phase 2 — Gestion de paquets
+## Phase 2 — Gestion de paquets
 - [ ] Implémenter `packx install <pkg>`
 - [ ] Implémenter `packx remove <pkg>`
 - [ ] Implémenter `packx list`
@@ -30,7 +30,7 @@
 
 ---
 
-## 🗂️ Phase 3 — Système de stockage
+## Phase 3 — Système de stockage
 - [x] Créer dossier `~/.packx/`
 - [x] Créer fichier `installed.json` ou `.db`
 - [x] Créer `init.c` check de l'arborescence
@@ -39,7 +39,7 @@
 
 ---
 
-## 🌐 Phase 4 — Sources & téléchargement
+## Phase 4 — Sources & téléchargement
 - [ ] Ajouter notion de "repo"
 - [ ] Télécharger un fichier (libcurl ou wget)
 - [ ] Parser une liste de paquets distante
@@ -47,7 +47,7 @@
 
 ---
 
-## 🔍 Phase 5 — Résolution de dépendances
+## Phase 5 — Résolution de dépendances
 - [ ] Ajouter dépendances entre paquets
 - [ ] Vérifier si un paquet est déjà installé
 - [ ] Installer dépendances automatiquement
@@ -55,7 +55,7 @@
 
 ---
 
-## 🧪 Phase 6 — Qualité & robustesse
+## Phase 6 — Qualité & robustesse
 - [ ] Gestion des erreurs complète
 - [ ] Codes de retour cohérents
 - [ ] Logs
@@ -63,7 +63,7 @@
 
 ---
 
-## 🚀 Phase 7 — UX & CLI avancé
+## Phase 7 — UX & CLI avancé
 - [ ] Flags (`--help`, `--force`, `--yes`)
 - [ ] Couleurs dans le terminal
 - [ ] Barre de progression
@@ -71,21 +71,21 @@
 
 ---
 
-## 🔌 Phase 8 — Architecture avancée
+## Phase 8 — Architecture avancée
 - [ ] Modulariser chaque commande (`cmd/*.c`)
 - [ ] Système de plugins
 - [ ] Chargement dynamique des commandes
 
 ---
 
-## 📦 Phase 9 — Packaging
+## Phase 9 — Packaging
 - [ ] Installer `packx` dans `/usr/bin`
 - [ ] Créer un `.deb` ou `.pkg`
 - [ ] Script d’installation
 
 ---
 
-## 🧠 Bonus (niveau expert)
+## Bonus (niveau expert)
 - [ ] Multi-threading (install parallèle)
 - [ ] Cache local
 - [ ] Vérification d’intégrité (hash)

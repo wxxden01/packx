@@ -19,18 +19,53 @@
         └── ...
 
 ### 2 - POUR CHAQUE PAQUET:
-    - Télécharger l'archive + le hash
+    - Télécharger l'archive
     - Créer le fichier YAML (packx.yml)
     - Reconstruire l'archive
     - Upload sur le miroir
+    - Créer la signature 
 
 ---
 
 ## Phase 1:
 - [x] Vérifier que le paquet n'est pas déjà installé
 - [x] Ajouter ~/.packx/cache, ~/.packx/pkgs
-- [ ] Vérifier que l'archive est sur le mirroir
+- [x] Vérifier que l'archive est sur le mirroir
 - [ ] Download depuis le miroir
 - [ ] Vérifier avant tout le hash
 - [ ] Faire l'installation
 - [ ] l'inscrire dans le fichier ~/.packx/installed.db (format : nom|version|size)
+---
+
+## Comportement de la commande:
+``` bash
+packx install test
+        │
+        ▼
+récupérer repo.db
+        │
+        ▼
+trouver test
+        │
+        ▼
+récupérer test-8.6.2.tar.xz
+        │
+        ▼
+récupérer test-8.6.2.tar.xz.sig
+        │
+        ▼
+vérifier la signature
+        │
+        ├── ❌ invalide → STOP
+        │
+        ▼
+extraire
+        │
+        ▼
+lire packx.yml
+        │
+        ▼
+installer
+        │
+        ▼
+installed.db```
