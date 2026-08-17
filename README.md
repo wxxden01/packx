@@ -4,7 +4,8 @@
 
 Gestionnaire de paquets léger pour distributions Linux en construction.
 
-[![C](https://img.shields.io/badge/Langage-2211ff?style=for-the-badge&logo=C)](https://www.c-language.org/)
+![Eco](https://img.shields.io/badge/Langage-C-blue?style=for-the-badge)
+![Linux](https://img.shields.io/badge/OS-Linux-yellow?style=for-the-badge&logo=linux)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 [![Version](https://img.shields.io/badge/version-0.1.0-blue?style=for-the-badge)]()
 
