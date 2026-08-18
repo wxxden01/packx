@@ -19,4 +19,14 @@ int download_mirror_db(const char *mirror);
 
 char *select_mirror(const char *file_name);
 
+// temp
+// Callback appelé par libcurl à chaque chunk reçu
+size_t write_to_file(void *contents, size_t size, size_t nmemb, void *userp) {
+    FILE *fp = (FILE *)userp;
+    size_t written = fwrite(contents, size, nmemb, fp);
+    return written;
+}
+
+int download(const char *mirror);
+
 #endif

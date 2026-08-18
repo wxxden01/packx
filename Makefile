@@ -12,6 +12,7 @@ CC = gcc
 
 # Flags
 CFLAGS = -Wall -Wextra -Werror -Iinclude
+LDLIBS = -lcurl
 
 # Sources
 SRC_DIR = src
@@ -26,7 +27,7 @@ all: $(BIN)
 # Link
 $(BIN): $(OBJS)
 	@mkdir -p $(BUILD_DIR)
-	$(CC) $(CFLAGS) $(OBJS) -o $(BIN)
+	$(CC) $(CFLAGS) $(OBJS) -o $(BIN) $(LDLIBS)
 
 # Compilation
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c

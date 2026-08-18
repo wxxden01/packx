@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <curl/curl.h>
+
 #include "mirror.h"
 #include "path_builder.h"
 #include "packages.h"
@@ -56,32 +58,57 @@ char *select_mirror(const char *file_name)
 }
 
 // Vérifier que le paquet est disponible sur le mirroir
-int download_mirror_db(const char *mirror)
+int download(const char *mirror)
 {
+    CURL *curl;
+    CURLcode res;
+    FILE *fp;
+
     // Construction du chemin vers le repo du miroir
-    static char db_path[PATH_MAX_LEN];
-    snprintf(db_path, sizeof(db_path), "%s/%s", mirror, "repo.db");
-    
+    static char url_db_mirror[PATH_MAX_LEN];
+    snprintf(url_db_mirror, sizeof(url_db_mirror), "%s/%s", mirror, "repo.db");
+
     // Construction du chemin vers le cache
     const char *dir_name = "cache/repo.db";
-    char *cache_path = make_path(dir_name);
-    if (!cache_path)
+    char *output_path = make_path(dir_name);
+    if (!output_path)
     {
         return -1;
     }
 
-    // Construction de la ommande
-    char command[512];
-    snprintf(command, sizeof(command), "curl -s \"%s\" -o \"%s\"", db_path, cache_path);
-    // Exécution de la commande construite
-    int status = system(command);
-    
-    // Vérification de la bonne exécution
-    if (status != 0) {
-        fprintf(stderr, "Erreur lors du téléchargement de la base de données.\n");
+    fp = fopen(output_path, "wb");
+    if (fp == NULL)
+    {
+        fprintf(stderr, "Impossible d'ouvrir %s en écriture\n", output_path);
         return -1;
     }
     
+    curl = curl_easy_init();
+    if (curl)
+    {
+        // Définition de l'url sur lequel on travail
+        curl_easy_setopt(curl, CURLOPT_URL, url_db_mirror);
+
+        // Enregistrer le callback qui écrit dans le fichier
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_to_file);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
+
+        // Suivre les redirections
+        curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
+
+        // Exécuter le téléchargement
+        res = curl_easy_perform(curl);
+        if (res != CURLE_OK)
+        {
+            fprintf(stderr, "Echec du téléchargement: %s\n", curl_easy_strerror(res));
+            fclose(fp);
+            curl_easy_cleanup(curl);
+            return -1;
+        }
+        curl_easy_cleanup(curl);
+    }
+    
+    fclose(fp);
     return 0;
 }
 
@@ -107,14 +134,13 @@ int mirror_check(void)
         return -1;
     }
 
-    if (!download_mirror_db(mirror))
+    if (!download(mirror))
     {
         return -1;
     }
     
-    
-    free(full_path);
     free(mirror);
-    
+    free(full_path);
+
     return 0;
 }
