@@ -1,7 +1,13 @@
 #include <stdio.h>
+// #include <curl/curl.h>
 
 #include "mirror.h"
 #include "packages.h"
+
+// int download_pkg()
+// {
+
+// }
 
 int packx_install(int argc, char **argv)
 {
@@ -20,7 +26,7 @@ int packx_install(int argc, char **argv)
     }
     
     // Vérifie la config du mirroir
-    if (!mirror_check())
+    if (mirror_check() != 0)
     {
         return -1;
     }
