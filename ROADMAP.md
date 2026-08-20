@@ -39,15 +39,7 @@
 
 ---
 
-## Phase 4 — Sources & téléchargement
-- [ ] Ajouter notion de "repo"
-- [ ] Télécharger un fichier (libcurl ou wget)
-- [ ] Parser une liste de paquets distante
-- [ ] Implémenter `packx update`
-
----
-
-## Phase 5 — Résolution de dépendances
+## Phase 4 — Résolution de dépendances
 - [ ] Ajouter dépendances entre paquets
 - [ ] Vérifier si un paquet est déjà installé
 - [ ] Installer dépendances automatiquement
@@ -55,15 +47,14 @@
 
 ---
 
-## Phase 6 — Qualité & robustesse
+## Phase 5 — Qualité & robustesse
 - [ ] Gestion des erreurs complète
-- [ ] Codes de retour cohérents
 - [ ] Logs
 - [ ] Tests unitaires
 
 ---
 
-## Phase 7 — UX & CLI avancé
+## Phase 6 — UX & CLI avancé
 - [ ] Flags (`--help`, `--force`, `--yes`)
 - [ ] Couleurs dans le terminal
 - [ ] Barre de progression
@@ -71,25 +62,21 @@
 
 ---
 
-## Phase 8 — Architecture avancée
+## Phase 7 — Architecture avancée
 - [ ] Modulariser chaque commande (`cmd/*.c`)
 - [ ] Système de plugins
 - [ ] Chargement dynamique des commandes
 
 ---
 
-## Phase 9 — Packaging
+## Phase 8 — Packaging
 - [ ] Installer `packx` dans `/usr/bin`
 - [ ] Créer un `.deb` ou `.pkg`
 - [ ] Script d’installation
 
 ---
 
-## Bonus (niveau expert)
+## Bonus
 - [ ] Multi-threading (install parallèle)
-- [ ] Cache local
-- [ ] Vérification d’intégrité (hash)
-- [ ] Signature des paquets
-
 
 # Pas besoin d'IA, un cerveau suffit!

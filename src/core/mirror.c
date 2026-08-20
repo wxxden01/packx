@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <curl/curl.h>
+
 #include "mirror.h"
 #include "path_builder.h"
 #include "packages.h"
@@ -55,33 +57,79 @@ char *select_mirror(const char *file_name)
     return found_line;
 }
 
+size_t write_to_file(void *contents, size_t size, size_t nmemb, void *userp) {
+    FILE *fp = (FILE *)userp;
+    size_t written = fwrite(contents, size, nmemb, fp);
+    return written;
+}
+
 // Vérifier que le paquet est disponible sur le mirroir
-int download_mirror_db(const char *mirror)
+int download_from_mirror(const char *mirror, const char *file_name)
 {
-    // Construction du chemin vers le repo du miroir
-    static char db_path[PATH_MAX_LEN];
-    snprintf(db_path, sizeof(db_path), "%s/%s", mirror, "repo.db");
-    
-    // Construction du chemin vers le cache
-    const char *dir_name = "cache/repo.db";
-    char *cache_path = make_path(dir_name);
-    if (!cache_path)
+    CURL *curl;
+    CURLcode res;
+    FILE *fp;
+
+    // Construction de chemin vers le certificats du serveur
+    const char *certificate_file = "certificates/nginx-selfsigned.crt";
+    char *certificate_file_path = make_path(certificate_file);
+    if (!certificate_file_path)
     {
+        printf("Erreur lors du chargement du certificat!\nVérifier que vous avez bien installez le certificat du miroir dans ~/.packx/certificates\n");
         return -1;
     }
 
-    // Construction de la ommande
-    char command[512];
-    snprintf(command, sizeof(command), "curl -s \"%s\" -o \"%s\"", db_path, cache_path);
-    // Exécution de la commande construite
-    int status = system(command);
-    
-    // Vérification de la bonne exécution
-    if (status != 0) {
-        fprintf(stderr, "Erreur lors du téléchargement de la base de données.\n");
+    // Construction du chemin vers le repo du miroir (Distant)
+    static char url_db_mirror[PATH_MAX_LEN];
+    snprintf(url_db_mirror, sizeof(url_db_mirror), "%s/%s", mirror, file_name);
+    printf("FROM URL: %s\n", url_db_mirror);
+
+    // Construction du chemin vers le cache (Local)
+    static char dir_name[PATH_MAX_LEN];
+    snprintf(dir_name, sizeof(dir_name), "cache/%s", file_name);
+    char *output_path = make_path(dir_name);
+    if (!output_path)
+    {
+        return -1;
+    }
+    printf("TO PATH: %s\n", output_path);
+
+    fp = fopen(output_path, "wb");
+    if (fp == NULL)
+    {
+        fprintf(stderr, "Impossible d'ouvrir %s en écriture\n", output_path);
         return -1;
     }
     
+    curl = curl_easy_init();
+    if (curl)
+    {
+        // Définition de l'url sur lequel on travail
+        curl_easy_setopt(curl, CURLOPT_URL, url_db_mirror);
+
+        // Récupère le certificat du serveur
+        curl_easy_setopt(curl, CURLOPT_CAINFO, certificate_file_path);
+
+        // Enregistrer le callback qui écrit dans le fichier
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_to_file);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
+
+        // Suivre les redirections
+        curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
+
+        // Exécuter le téléchargement
+        res = curl_easy_perform(curl);
+        if (res != CURLE_OK)
+        {
+            fprintf(stderr, "Echec du téléchargement: %s\n", curl_easy_strerror(res));
+            fclose(fp);
+            curl_easy_cleanup(curl);
+            return -1;
+        }
+        curl_easy_cleanup(curl);
+    }
+    
+    fclose(fp);
     return 0;
 }
 
@@ -107,14 +155,22 @@ int mirror_check(void)
         return -1;
     }
 
-    if (!download_mirror_db(mirror))
+    if (download_from_mirror(mirror, "repo.db") != 0)
     {
+        printf("erreur dw repo\n");
         return -1;
     }
+
+    if (download_from_mirror(mirror, "repo.db.sig") != 0)
+    {
+        printf("erreur dw sig repo!\n");
+        return -1;
+    }
+
+    // Vérifier la signature
     
-    
-    free(full_path);
     free(mirror);
-    
+    free(full_path);
+
     return 0;
 }
