@@ -32,10 +32,11 @@
 ## Phase 1:
 - [x] Vérifier que le paquet n'est pas déjà installé
 - [x] Ajouter ~/.packx/cache, ~/.packx/pkgs
-- [x] Vérifier que l'archive est sur le mirroir
-- [ ] Download depuis le miroir
+- [x] Download depuis le miroir avec Libcurl
 - [ ] Vérifier la signature de la db
-- [ ] Vérifier avant tout le hash
+- [x] Vérifier que l'archive est sur le mirroir
+- [ ] Télécharger l'archive
+- [ ] Comparer les hash
 - [ ] Faire l'installation
 - [ ] l'inscrire dans le fichier ~/.packx/installed.db (format : nom|version|nom-v.tar.xz|HASH|size)
 ---
