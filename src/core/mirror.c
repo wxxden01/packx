@@ -7,6 +7,7 @@
 #include "mirror.h"
 #include "path_builder.h"
 #include "packages.h"
+#include "verif_gpg.h"
 
 #define PATH_MAX_LEN 256
 
@@ -168,7 +169,14 @@ int mirror_check(void)
     }
 
     // Vérifier la signature
-    
+    if (verify_signature("/home/rudy/.packx/cache/repo.db", "/home/rudy/.packx/cache/repo.db.sig", "/home/rudy/.packx/keyring") == 0) {
+        printf("Vérification réussie\n");
+        return 0;
+    } else {
+        printf("Vérification échouée\n");
+        return 1;
+    }
+
     free(mirror);
     free(full_path);
 
