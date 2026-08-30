@@ -47,8 +47,9 @@ cd packx
 make
 
 # L'exécutable se trouve dans build/
-./build/packx --help
+./build/packx -h
 ```
 
 # Etat
-Non fonctionnel à ce stade
+- [ROADMAP](/ROADMAP.md)
+- Non fonctionnel à ce stade
