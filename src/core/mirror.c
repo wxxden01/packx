@@ -12,8 +12,16 @@
 #define PATH_MAX_LEN 256
 
 // Vérifie qu'au moins un mirroir est définit
-int check_mirror_list(char *full_path)
+int check_mirror_list()
 {
+    static const char *mirror_file = "mirror.txt"; 
+    
+    char *full_path = make_path(mirror_file);
+    if (!full_path)
+    {
+        return -1;
+    }
+
     FILE *file = fopen(full_path, "r");
     if (!file)
     {
@@ -33,9 +41,17 @@ int check_mirror_list(char *full_path)
 }
 
 // choisir le mirroir à partir de la liste des mirroirs définit
-char *select_mirror(const char *file_name)
+char *select_mirror()
 {
-    FILE *file = fopen(file_name, "r");
+    static const char *mirror_file = "mirror.txt"; 
+    
+    char *full_path = make_path(mirror_file);
+    if (!full_path)
+    {
+        return NULL;
+    }
+
+    FILE *file = fopen(full_path, "r");
     if (!file) {
         perror("Erreur lors de l'ouverture de la base de données");
         return NULL;
@@ -136,26 +152,20 @@ int download_from_mirror(const char *mirror, const char *file_name)
 
 int mirror_check(void)
 {
-    static const char *mirror_file = "mirror.txt"; 
-    
-    char *full_path = make_path(mirror_file);
-    if (!full_path)
-    {
-        return -1;
-    }
-
-    if (check_mirror_list(full_path) != 0)
+    if (check_mirror_list() != 0)
     {
         fprintf(stderr, "Erreur : Le fichier est vide, aucun mirroir renseigné!\nVeuillez ajouter un mirroir dans le fichier ~/.packx/mirror.txt\n");
         return -1;
     }
 
-    char *mirror = select_mirror(full_path);
+    // Selection un mirroir dans sa liste
+    char *mirror = select_mirror();
     if (mirror == NULL)
     {
         return -1;
     }
 
+    // Télécharge le fichier repo.db ainsi que sa signature
     if (download_from_mirror(mirror, "repo.db") != 0)
     {
         printf("erreur dw repo\n");
@@ -178,7 +188,6 @@ int mirror_check(void)
     }
 
     free(mirror);
-    free(full_path);
 
     return 0;
 }
