@@ -26,10 +26,11 @@ int packx_help(int argc, char **argv)
         // printf(" remove <package>  - Supprime le paquet demandé.\n");
         // printf(" update            - Sans argument, met à jour le système complet; Suivit d'un argument (nom de paquet), ce dernier sera mit à jour.\n");
 
-        printf("\nDéveloppeurs du projet : \nRudy DANIEL - @WXXDEN\nYmad Eddine HASSIN-BOUKAL - @zanblue\n");
+        printf("\nDéveloppeurs du projet : \nRudy DANIEL - @WXXDEN\n");
     }
     else{
-        if (db_pkg_reader(1, argv[2]) == 0)
+        package_t pkg;
+        if (pkg_finder(1, argv[2], &pkg) == 0)
         {
             printf("Aide demandé pour le paquet: %s\n", argv[2]);
             return 0;

@@ -5,7 +5,7 @@
 typedef struct {
     char name[32];
     char version[16];
-    char full_name[64];
+    char full_name[256];
     char size[16];
     char hash[33];
 } package_t;
@@ -24,6 +24,6 @@ int parse_line(const char *line, package_t *pkg);
  * @param target_pkg Le paquet demandé
  * @return Renvoie les informations du paquet
  */
-int db_pkg_reader(int source_db, const char *target_pkg);
+int pkg_finder(int source_db, const char *target_pkg, package_t *out_pkg);
 
 #endif 

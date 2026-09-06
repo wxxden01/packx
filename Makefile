@@ -11,8 +11,8 @@ BIN = $(BUILD_DIR)/$(NAME)
 CC = gcc
 
 # Flags
-CFLAGS = -Wall -Wextra -Werror -Iinclude
-LDLIBS = -lcurl
+CFLAGS = -Wall -Wextra -Werror -Iinclude -g $(shell pkg-config --cflags gpgme)
+LDLIBS = -lcurl -lcrypto $(shell pkg-config --libs gpgme)
 
 # Sources
 SRC_DIR = src

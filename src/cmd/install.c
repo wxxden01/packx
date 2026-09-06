@@ -1,13 +1,11 @@
 #include <stdio.h>
-// #include <curl/curl.h>
 
+#include "path_builder.h"
 #include "mirror.h"
 #include "packages.h"
+#include "check_hash.h"
 
-// int download_pkg()
-// {
-
-// }
+package_t pkg_data;
 
 int packx_install(int argc, char **argv)
 {
@@ -19,7 +17,7 @@ int packx_install(int argc, char **argv)
     }
 
     // Vérifie que le paquet n'est pas installé
-    if (!db_pkg_reader(1, argv[2]))
+    if (pkg_finder(2, argv[2], &pkg_data) == -1)
     {
         printf("Le paquet %s est déjà installé sur cette machine!\n", argv[2]);
         return -1;
@@ -32,7 +30,7 @@ int packx_install(int argc, char **argv)
     }
 
     // Vérifier si l'archive existe sur le mirroir
-    if (db_pkg_reader(2, argv[2]) == 1)
+    if (pkg_finder(2, argv[2], &pkg_data) == -1)
     {
         printf("Le paquet %s n'est pas disponible sur ce miroir ou n'existe pas!\nVérifier l'hortograhe et réssayer!\n", argv[2]);
         return -1;
@@ -40,6 +38,23 @@ int packx_install(int argc, char **argv)
     printf("Paquet disponible sur le miroir!\n");
 
     // Télécharger l'archive
+    char *mirror = select_mirror();
+    if (mirror == NULL)
+    {
+        return -1;
+    }
+
+    if (download_from_mirror(mirror, pkg_data.full_name) != 0)
+    {
+        printf("erreur dw repo\n");
+        return -1;
+    }
+    
+    // Vérifie le hash du paquet
+    if (check_SHA256(pkg_data.name))
+    {
+        return -1;
+    }
     
     return 1;
 }

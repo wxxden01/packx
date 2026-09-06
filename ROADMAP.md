@@ -22,7 +22,7 @@
 ---
 
 ## Phase 2 — Gestion de paquets
-- [ ] Implémenter `packx install <pkg>`
+- [ ] Implémenter  `packx install <pkg>` ([ROADMAP](/src/cmd/install.md))
 - [ ] Implémenter `packx remove <pkg>`
 - [ ] Implémenter `packx list`
 - [x] Créer une base locale (fichier `.packx/db`)
@@ -40,10 +40,9 @@
 ---
 
 ## Phase 4 — Résolution de dépendances
-- [ ] Ajouter dépendances entre paquets
-- [ ] Vérifier si un paquet est déjà installé
-- [ ] Installer dépendances automatiquement
-- [ ] Détecter conflits
+- [ ] Ajouter les dépendances entre paquets
+- [ ] Installer les dépendances automatiquement
+- [ ] Détecter les conflits
 
 ---
 
