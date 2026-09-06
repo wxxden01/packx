@@ -12,7 +12,7 @@ CC = gcc
 
 # Flags
 CFLAGS = -Wall -Wextra -Werror -Iinclude -g $(shell pkg-config --cflags gpgme)
-LDLIBS = -lcurl $(shell pkg-config --libs gpgme)
+LDLIBS = -lcurl -lcrypto $(shell pkg-config --libs gpgme)
 
 # Sources
 SRC_DIR = src

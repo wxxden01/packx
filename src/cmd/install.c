@@ -3,6 +3,7 @@
 #include "path_builder.h"
 #include "mirror.h"
 #include "packages.h"
+#include "check_hash.h"
 
 package_t pkg_data;
 
@@ -46,6 +47,12 @@ int packx_install(int argc, char **argv)
     if (download_from_mirror(mirror, pkg_data.full_name) != 0)
     {
         printf("erreur dw repo\n");
+        return -1;
+    }
+    
+    // Vérifie le hash du paquet
+    if (check_SHA256(pkg_data.name))
+    {
         return -1;
     }
     
