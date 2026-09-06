@@ -13,7 +13,7 @@ int parse_line(const char *line, package_t *pkg)
 
     // %63[^|] lit au maximum 63 caractères tant que ce n'est pas un '|'
     // %32[^\n] lit la taille sans inclure le saut de ligne
-    int matched = sscanf(line, "%31[^|]|%15[^|]|%63[^|]|%15[^|]|%32[^\n]", 
+    int matched = sscanf(line, "%31[^|]|%15[^|]|%257[^|]|%15[^|]|%32[^\n]", 
                          pkg->name, 
                          pkg->version, 
                          pkg->full_name,

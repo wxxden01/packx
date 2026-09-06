@@ -5,7 +5,7 @@
 typedef struct {
     char name[32];
     char version[16];
-    char full_name[64];
+    char full_name[256];
     char size[16];
     char hash[33];
 } package_t;
