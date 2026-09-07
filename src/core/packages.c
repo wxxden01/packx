@@ -3,6 +3,7 @@
 #include <stdio.h>
 
 #include "packages.h"
+#include "path.h"
 #include "path_builder.h"
 
 #define PATH_MAX_LEN 256
@@ -27,11 +28,8 @@ int pkg_finder(int source_db, const char *target_pkg, package_t *out_pkg) {
     if (!target_pkg || !out_pkg) return -1;
 
     const char *db_file = (source_db == 1) ? "installed.db" : "cache/repo.db";
-    char *full_path = make_path(db_file);
-    
-    if (!full_path) {
-        return -1;
-    }
+    char *full_path = generate_path(PACKX_DB_DIR, db_file);
+    printf("PATH: %s\n", full_path);
 
     FILE *file = fopen(full_path, "r");
     free(full_path); // IMPORTANT : Libérer la mémoire allouée par make_path

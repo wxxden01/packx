@@ -19,7 +19,7 @@ PACKX est un gestionnaire de paquets minimaliste conçu pour les distributions L
 - **Simplicité** : Code C propre et compréhensible
 - **Légèreté** : Dépendances minimales
 - **Transparence** : Format de base de données lisible
-- **Sécurité** : Vérification GPG + MD5
+- **Sécurité** : Vérification GPG + SHA256
 
 ## Fonctionnalités
 

@@ -7,4 +7,6 @@
  */
 char *make_path(const char *path);
 
+
+char *generate_path(const char *path, const char *file_name);
 #endif

@@ -8,7 +8,7 @@
 
 int packx_search(int argc, char **argv)
 {
-    if (argc > 2)
+    if (argc != 3)
     {
         package_t pkg;
         if (pkg_finder(1, argv[2], &pkg) == 0)

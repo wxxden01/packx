@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 #include "path_builder.h"
 #include "mirror.h"
@@ -9,20 +10,35 @@ package_t pkg_data;
 
 int packx_install(int argc, char **argv)
 {
+    char pkg_selected[256];
+
+    // Check if argc has enough elements before accessing argv
+    if (argc > 0 && strcmp(argv[0], "sudo") == 0) {
+        if (argc > 3) {
+            strncpy(pkg_selected, argv[3], sizeof(pkg_selected) - 1);
+            pkg_selected[sizeof(pkg_selected) - 1] = '\0';
+        }
+    } else {
+        if (argc > 2) {
+            strncpy(pkg_selected, argv[2], sizeof(pkg_selected) - 1);
+            pkg_selected[sizeof(pkg_selected) - 1] = '\0';
+        }
+    }
+
     // Nombre d'arguments attendue
-    if (argc != 3)
+    if (*pkg_selected != argc)
     {
         printf("Mauvaise utilisation de la commande! Cette commande doit être suivit d'un nom de paquet.\n");
         return -1;
     }
 
     // Vérifie que le paquet n'est pas installé
-    if (pkg_finder(2, argv[2], &pkg_data) == -1)
+    if (pkg_finder(2, pkg_selected, &pkg_data) == -1)
     {
-        printf("Le paquet %s est déjà installé sur cette machine!\n", argv[2]);
+        printf("Le paquet %s est déjà installé sur cette machine!\n", pkg_selected);
         return -1;
     }
-    
+
     // Vérifie la config du mirroir
     if (mirror_check() != 0)
     {
@@ -30,9 +46,9 @@ int packx_install(int argc, char **argv)
     }
 
     // Vérifier si l'archive existe sur le mirroir
-    if (pkg_finder(2, argv[2], &pkg_data) == -1)
+    if (pkg_finder(2, pkg_selected, &pkg_data) == -1)
     {
-        printf("Le paquet %s n'est pas disponible sur ce miroir ou n'existe pas!\nVérifier l'hortograhe et réssayer!\n", argv[2]);
+        printf("Le paquet %s n'est pas disponible sur ce miroir ou n'existe pas!\nVérifier l'hortograhe et réssayer!\n", pkg_selected);
         return -1;
     }
     printf("Paquet disponible sur le miroir!\n");

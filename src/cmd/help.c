@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "version.h"
 #include "packages.h"
@@ -9,6 +10,24 @@
 
 int packx_help(int argc, char **argv)
 {
+    char pkg_selected[256];
+
+    // Check if argc has enough elements before accessing argv
+    if (argc > 0 && strcmp(argv[0], "sudo") == 0) {
+        if (argc > 3) {
+            strncpy(pkg_selected, argv[3], sizeof(pkg_selected) - 1);
+            pkg_selected[sizeof(pkg_selected) - 1] = '\0';
+            printf("%s\n", pkg_selected);
+        }
+    } else {
+        if (argc > 2) {
+            strncpy(pkg_selected, argv[2], sizeof(pkg_selected) - 1);
+            pkg_selected[sizeof(pkg_selected) - 1] = '\0';
+            printf("%s\n", pkg_selected);
+        }
+    }
+    printf("%s\n", pkg_selected);
+
     if (argc < 3)
     {
         printf("%s", PACKX_VERSION);
@@ -30,13 +49,13 @@ int packx_help(int argc, char **argv)
     }
     else{
         package_t pkg;
-        if (pkg_finder(1, argv[2], &pkg) == 0)
+        if (pkg_finder(1, pkg_selected, &pkg) == 0)
         {
-            printf("Aide demandé pour le paquet: %s\n", argv[2]);
+            printf("Aide demandé pour le paquet: %s\n", pkg_selected);
             return 0;
         }
         
-        printf("%s est introuvable, vérifiez qu'il soit bien installer\n", argv[2]);
+        printf("%s est introuvable, vérifiez qu'il soit bien installer\n", pkg_selected);
     }
     return 0;
 }
