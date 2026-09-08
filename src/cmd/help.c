@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "help.h"
+#include "has_sudo.h"
 #include "version.h"
 #include "packages.h"
 #include "commands.h"
@@ -10,22 +12,7 @@
 
 int packx_help(int argc, char **argv)
 {
-    char pkg_selected[256];
-
-    // Check if argc has enough elements before accessing argv
-    if (argc > 0 && strcmp(argv[0], "sudo") == 0) {
-        if (argc > 3) {
-            strncpy(pkg_selected, argv[3], sizeof(pkg_selected) - 1);
-            pkg_selected[sizeof(pkg_selected) - 1] = '\0';
-        }
-    } else {
-        if (argc > 2) {
-            strncpy(pkg_selected, argv[2], sizeof(pkg_selected) - 1);
-            pkg_selected[sizeof(pkg_selected) - 1] = '\0';
-        }
-    }
-
-    if (*pkg_selected == 3 && argc < 3)
+    if ((sudo(argv[0]) && argc <4) || (!sudo(argv[0]) && argc < 3))
     {
         printf("%s", PACKX_VERSION);
         printf("PACKX est un gestionnaire de paquet en ligne de commande!\n\n");
@@ -44,7 +31,23 @@ int packx_help(int argc, char **argv)
 
         printf("\nDéveloppeurs du projet : \nRudy DANIEL - @WXXDEN\n");
     }
+    else if ((sudo(argv[0]) && argc > 4) || (!sudo(argv[0]) && argc > 3))
+    {
+        printf("Mauvaise utilisation de la commande 'help'\nUtilisation : packx -h <pkg>\n");
+    }
+    
     else{
+        char pkg_selected[256];
+
+        // Check if argc has enough elements before accessing argv
+        if (sudo(argv[0])) {
+            strncpy(pkg_selected, argv[3], sizeof(pkg_selected) - 1);
+            pkg_selected[sizeof(pkg_selected) - 1] = '\0';
+        } else {
+            strncpy(pkg_selected, argv[2], sizeof(pkg_selected) - 1);
+            pkg_selected[sizeof(pkg_selected) - 1] = '\0';
+        }
+    
         package_t pkg;
         if (pkg_finder(1, pkg_selected, &pkg) == 0)
         {
