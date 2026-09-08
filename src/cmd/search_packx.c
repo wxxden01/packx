@@ -17,14 +17,14 @@ int packx_search(int argc, char **argv)
 
     char pkg_selected[256];
 
-        // Check if argc has enough elements before accessing argv
-        if (sudo(argv[0])) {
-            strncpy(pkg_selected, argv[3], sizeof(pkg_selected) - 1);
-            pkg_selected[sizeof(pkg_selected) - 1] = '\0';
-        } else {
-            strncpy(pkg_selected, argv[2], sizeof(pkg_selected) - 1);
-            pkg_selected[sizeof(pkg_selected) - 1] = '\0';
-        }
+    // Check if argc has enough elements before accessing argv
+    if (sudo(argv[0])) {
+        strncpy(pkg_selected, argv[3], sizeof(pkg_selected) - 1);
+        pkg_selected[sizeof(pkg_selected) - 1] = '\0';
+    } else {
+        strncpy(pkg_selected, argv[2], sizeof(pkg_selected) - 1);
+        pkg_selected[sizeof(pkg_selected) - 1] = '\0';
+    }
 
     package_t pkg;
     if (pkg_finder(1, pkg_selected, &pkg) != 0)

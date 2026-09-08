@@ -35,7 +35,7 @@ command_packx commands[] = {
     {"search",  packx_search,  "Rechercher un paquet"},
     {"update",  packx_update,  "Mettre à jour"},
     {"-h",      packx_help,    "Afficher l'aide de Packx ou d'un paquet"},
-    {"-v",      packx_version, "Donne le nuémro de version de Packx ou d'un paquet"},
+    {"-v",      packx_version, "Donne le numéro de version de Packx ou d'un paquet"},
     {"config",  show_config,   "Affiche la configuration de Packx"},
     {NULL, NULL, NULL}
 };
