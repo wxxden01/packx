@@ -26,14 +26,14 @@ int packx_install(int argc, char **argv)
     }
 
     // Nombre d'arguments attendue
-    if (*pkg_selected != argc)
+    if (argc > 4)
     {
         printf("Mauvaise utilisation de la commande! Cette commande doit être suivit d'un nom de paquet.\n");
         return -1;
     }
 
     // Vérifie que le paquet n'est pas installé
-    if (pkg_finder(2, pkg_selected, &pkg_data) == -1)
+    if (pkg_finder(1, pkg_selected, &pkg_data) == -1)
     {
         printf("Le paquet %s est déjà installé sur cette machine!\n", pkg_selected);
         return -1;

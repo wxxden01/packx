@@ -17,18 +17,15 @@ int packx_help(int argc, char **argv)
         if (argc > 3) {
             strncpy(pkg_selected, argv[3], sizeof(pkg_selected) - 1);
             pkg_selected[sizeof(pkg_selected) - 1] = '\0';
-            printf("%s\n", pkg_selected);
         }
     } else {
         if (argc > 2) {
             strncpy(pkg_selected, argv[2], sizeof(pkg_selected) - 1);
             pkg_selected[sizeof(pkg_selected) - 1] = '\0';
-            printf("%s\n", pkg_selected);
         }
     }
-    printf("%s\n", pkg_selected);
 
-    if (argc < 3)
+    if (*pkg_selected == 3 && argc < 3)
     {
         printf("%s", PACKX_VERSION);
         printf("PACKX est un gestionnaire de paquet en ligne de commande!\n\n");
