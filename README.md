@@ -44,10 +44,10 @@ git clone https://github.com/wxxden01/packx.git
 cd packx
 
 # Compiler
-make
+sudo make install
 
 # L'exécutable se trouve dans build/
-./build/packx -h
+packx -h
 ```
 
 # Etat

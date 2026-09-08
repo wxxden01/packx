@@ -16,7 +16,7 @@ int packx_help(int argc, char **argv)
     {
         printf("%s", PACKX_VERSION);
         printf("PACKX est un gestionnaire de paquet en ligne de commande!\n\n");
-        printf("Liste des commandes disponible pour rex:\n\n");
+        printf("Liste des commandes disponible pour packx:\n\n");
 
         for (size_t i  = 0; commands[i].name != NULL; i++)
         {
@@ -29,7 +29,7 @@ int packx_help(int argc, char **argv)
         // printf(" remove <package>  - Supprime le paquet demandé.\n");
         // printf(" update            - Sans argument, met à jour le système complet; Suivit d'un argument (nom de paquet), ce dernier sera mit à jour.\n");
 
-        printf("\nDéveloppeurs du projet : \nRudy DANIEL - @WXXDEN\n");
+        printf("\nDéveloppeurs du projet : \n Rudy DANIEL - @WXXDEN\n");
     }
     else if ((sudo(argv[0]) && argc > 4) || (!sudo(argv[0]) && argc > 3))
     {
