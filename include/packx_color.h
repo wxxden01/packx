@@ -3,7 +3,8 @@
 
 #define ERROR "\033[31m"
 #define SUCCES  "\033[32m"
-#define FILE_COLOR "\e[33m"
+#define WARNING "\033[33m"
+#define FILE_COLOR "\e[34m"
 
 #define NORMAL "\e[0m"
 

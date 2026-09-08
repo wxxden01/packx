@@ -14,12 +14,12 @@ int packx_version(int argc, char **argv)
     // Case 1 : L'utilisateur tape juste "packx version" (2 arguments : argv[0] et argv[1])
     if ((sudo(argv[0]) && argc == 3) || (!sudo(argv[0]) && argc == 2))
     {
-        printf("PACKX version : %s\n", PACKX_VERSION);
+        printf(SUCCES "PACKX version : %s\n" NORMAL, PACKX_VERSION);
         return 0;
     }
     else if ((sudo(argv[0]) && argc > 4) || (!sudo(argv[0]) && argc > 3))
     {
-        printf("Mauvaise utilisation de la commande 'version'\nUtilisation : pack -v <pkg>\n");
+        printf(WARNING "Mauvaise utilisation de la commande 'version'\nUtilisation : pack -v <pkg>\n" NORMAL);
         return -1;
     }
     else

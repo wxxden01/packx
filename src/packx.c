@@ -2,7 +2,6 @@
 #include <string.h>
 
 // /include
-#include "init.h"
 #include "commands.h"
 
 /** Main function.
@@ -27,6 +26,6 @@ int main(int argc, char *argv[])
     }
 
     printf("Commande inconnue: %s\n", argv[1]);
-    return 1;
     
+    return 1;   
 }

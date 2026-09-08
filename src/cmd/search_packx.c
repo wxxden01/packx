@@ -4,6 +4,7 @@
 
 #include "has_sudo.h"
 #include "packages.h"
+#include "packx_color.h"
 
 #define PATH_MAX_LEN 256
 
@@ -11,7 +12,7 @@ int packx_search(int argc, char **argv)
 {
     if ((sudo(argv[0]) && argc != 4) || (!sudo(argv[0]) && argc != 3))
     {
-        printf("Mauvaise utilisation de la commande! 'packx search <pkg>'\n");
+        printf(WARNING "Mauvaise utilisation de la commande! 'packx search <pkg>'\n" NORMAL);
         return -1;
     }
 

@@ -5,6 +5,7 @@
 #include "packages.h"
 #include "path.h"
 #include "path_builder.h"
+#include "packx_color.h"
 
 #define PATH_MAX_LEN 256
 
@@ -34,7 +35,7 @@ int pkg_finder(int source_db, const char *target_pkg, package_t *out_pkg) {
     free(full_path); // IMPORTANT : Libérer la mémoire allouée par make_path
     
     if (!file) {
-        perror("Erreur lors de l'ouverture de la base de données");
+        perror(ERROR "Erreur lors de l'ouverture de la base de données" NORMAL);
         return -1;
     }
 
