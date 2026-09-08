@@ -4,6 +4,7 @@
 
 #include <curl/curl.h>
 
+#include "path.h"
 #include "mirror.h"
 #include "path_builder.h"
 #include "packages.h"
@@ -15,12 +16,7 @@
 int check_mirror_list()
 {
     static const char *mirror_file = "mirror.txt"; 
-    
-    char *full_path = make_path(mirror_file);
-    if (!full_path)
-    {
-        return -1;
-    }
+    char *full_path = generate_path(PACKX_CONFIG_DIR, mirror_file);
 
     FILE *file = fopen(full_path, "r");
     if (!file)
@@ -44,12 +40,7 @@ int check_mirror_list()
 char *select_mirror()
 {
     static const char *mirror_file = "mirror.txt"; 
-    
-    char *full_path = make_path(mirror_file);
-    if (!full_path)
-    {
-        return NULL;
-    }
+    char *full_path = generate_path(PACKX_CONFIG_DIR, mirror_file);
 
     FILE *file = fopen(full_path, "r");
     if (!file) {
@@ -89,12 +80,7 @@ int download_from_mirror(const char *mirror, const char *file_name)
 
     // Construction de chemin vers le certificats du serveur
     const char *certificate_file = "certificates/nginx-selfsigned.crt";
-    char *certificate_file_path = make_path(certificate_file);
-    if (!certificate_file_path)
-    {
-        printf("Erreur lors du chargement du certificat!\nVérifier que vous avez bien installez le certificat du miroir dans ~/.packx/certificates\n");
-        return -1;
-    }
+    char *certificate_file_path = generate_path(PACKX_CONFIG_DIR, certificate_file);
 
     // Construction du chemin vers le repo du miroir (Distant)
     static char url_db_mirror[PATH_MAX_LEN];
@@ -104,11 +90,7 @@ int download_from_mirror(const char *mirror, const char *file_name)
     // Construction du chemin vers le cache (Local)
     static char dir_name[PATH_MAX_LEN];
     snprintf(dir_name, sizeof(dir_name), "cache/%s", file_name);
-    char *output_path = make_path(dir_name);
-    if (!output_path)
-    {
-        return -1;
-    }
+    char *output_path = generate_path(PACKX_CACHE_DIR, dir_name);
     printf("TO PATH: %s\n", output_path);
 
     fp = fopen(output_path, "wb");

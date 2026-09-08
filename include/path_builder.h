@@ -3,8 +3,8 @@
 /**
  * @brief Construit le chemin vers une ressource
  * @param path chemin vers la ressource
+ * @param file_name Nom du fichier vers lequel on veut pointer
  * @return Renvoie le chemin complet
  */
-char *make_path(const char *path);
-
+char *generate_path(const char *path, const char *file_name);
 #endif

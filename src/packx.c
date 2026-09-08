@@ -2,7 +2,6 @@
 #include <string.h>
 
 // /include
-#include "init.h"
 #include "commands.h"
 
 /** Main function.
@@ -12,12 +11,6 @@
  */
 int main(int argc, char *argv[])
 {
-    if (init_packx() != 0)
-    {
-        fprintf(stderr, "Erreur d'initialisation\n");
-        return 1;
-    }
-
     // On vérifie que le nombre d'arguments soit logique (au moins 2; ex : rex[0] install[2] htop[3])
     if (argc < 2)
     {
@@ -33,6 +26,6 @@ int main(int argc, char *argv[])
     }
 
     printf("Commande inconnue: %s\n", argv[1]);
-    return 1;
     
+    return 1;   
 }

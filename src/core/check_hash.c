@@ -2,6 +2,7 @@
 #include <openssl/evp.h>
 #include <string.h>
 
+#include "path.h"
 #include "check_hash.h"
 #include "packages.h"
 #include "path_builder.h"
@@ -14,11 +15,7 @@ int hash_generator_SHA256(char *pkg_name, char *output_hash)
     static char file_path[PATH_MAX_LEN];
     const char location[6] = "cache";
     snprintf(file_path, sizeof(file_path), "%s/%s", location, pkg_name);
-    char *output_path = make_path(file_path);
-    if (!output_path)
-    {
-        return -1;
-    }
+    char *output_path = generate_path(PACKX_CACHE_DIR, file_path);
 
     FILE *file = fopen(output_path, "rb");
     if (!file)
