@@ -5,37 +5,33 @@
 #include "mirror.h"
 #include "packages.h"
 #include "check_hash.h"
+#include "has_sudo.h"
+#include "packx_color.h"
 
 package_t pkg_data;
 
 int packx_install(int argc, char **argv)
 {
-    char pkg_selected[256];
-
-    // Check if argc has enough elements before accessing argv
-    if (argc > 0 && strcmp(argv[0], "sudo") == 0) {
-        if (argc > 3) {
-            strncpy(pkg_selected, argv[3], sizeof(pkg_selected) - 1);
-            pkg_selected[sizeof(pkg_selected) - 1] = '\0';
-        }
-    } else {
-        if (argc > 2) {
-            strncpy(pkg_selected, argv[2], sizeof(pkg_selected) - 1);
-            pkg_selected[sizeof(pkg_selected) - 1] = '\0';
-        }
-    }
-
-    // Nombre d'arguments attendue
-    if (argc > 4)
+    if ((sudo(argv[0]) && argc != 4) || (!sudo(argv[0]) && argc != 3))
     {
-        printf("Mauvaise utilisation de la commande! Cette commande doit être suivit d'un nom de paquet.\n");
+        printf(WARNING"Mauvaise utilisation de la commande! Cette commande doit être suivit d'un nom de paquet.\n"NORMAL);
         return -1;
+    }
+    
+    char pkg_selected[256];
+    // Check if argc has enough elements before accessing argv
+    if (sudo(argv[0])) {
+        strncpy(pkg_selected, argv[3], sizeof(pkg_selected) - 1);
+        pkg_selected[sizeof(pkg_selected) - 1] = '\0';
+    } else {
+        strncpy(pkg_selected, argv[2], sizeof(pkg_selected) - 1);
+        pkg_selected[sizeof(pkg_selected) - 1] = '\0';
     }
 
     // Vérifie que le paquet n'est pas installé
-    if (pkg_finder(1, pkg_selected, &pkg_data) == -1)
+    if (pkg_finder(1, pkg_selected, &pkg_data) != 0)
     {
-        printf("Le paquet %s est déjà installé sur cette machine!\n", pkg_selected);
+        printf(WARNING"Le paquet %s est déjà installé sur cette machine!\n"NORMAL, pkg_selected);
         return -1;
     }
 
@@ -46,12 +42,12 @@ int packx_install(int argc, char **argv)
     }
 
     // Vérifier si l'archive existe sur le mirroir
-    if (pkg_finder(2, pkg_selected, &pkg_data) == -1)
+    if (pkg_finder(2, pkg_selected, &pkg_data) == 0)
     {
         printf("Le paquet %s n'est pas disponible sur ce miroir ou n'existe pas!\nVérifier l'hortograhe et réssayer!\n", pkg_selected);
         return -1;
     }
-    printf("Paquet disponible sur le miroir!\n");
+    printf(SUCCES"Paquet "FILE_COLOR"%s"SUCCES" disponible sur le miroir!\n"NORMAL, pkg_selected);
 
     // Télécharger l'archive
     char *mirror = select_mirror();
