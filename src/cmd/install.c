@@ -34,7 +34,6 @@ int packx_install(int argc, char **argv)
         printf(WARNING"Le paquet %s est déjà installé sur cette machine!\n"NORMAL, pkg_selected);
         return -1;
     }
-
     // Vérifie la config du mirroir
     if (mirror_check() != 0)
     {
@@ -47,7 +46,7 @@ int packx_install(int argc, char **argv)
         printf("Le paquet %s n'est pas disponible sur ce miroir ou n'existe pas!\nVérifier l'hortograhe et réssayer!\n", pkg_selected);
         return -1;
     }
-    printf(SUCCES"Paquet "FILE_COLOR"%s"SUCCES" disponible sur le miroir!\n"NORMAL, pkg_selected);
+    printf("Paquet %s disponible sur le miroir!\n", pkg_selected);
 
     // Télécharger l'archive
     char *mirror = select_mirror();
@@ -61,12 +60,12 @@ int packx_install(int argc, char **argv)
         printf("erreur dw repo\n");
         return -1;
     }
-    
     // Vérifie le hash du paquet
-    if (check_SHA256(pkg_data.name))
+    if (check_SHA256(pkg_data.full_name, pkg_data.hash))
     {
         return -1;
     }
+    printf(SUCCES"Intégrité du paquet vérifier!\n"NORMAL);
     
     return 1;
 }
