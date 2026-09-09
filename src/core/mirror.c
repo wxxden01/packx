@@ -9,6 +9,7 @@
 #include "path_builder.h"
 #include "packages.h"
 #include "verif_gpg.h"
+#include "packx_color.h"
 
 #define PATH_MAX_LEN 256
 
@@ -79,7 +80,7 @@ int download_from_mirror(const char *mirror, const char *file_name)
     FILE *fp;
 
     // Construction de chemin vers le certificats du serveur
-    const char *certificate_file = "certificates/nginx-selfsigned.crt";
+    const char *certificate_file = "certs/nginx-selfsigned.crt";
     char *certificate_file_path = generate_path(PACKX_CONFIG_DIR, certificate_file);
 
     // Construction du chemin vers le repo du miroir (Distant)
@@ -89,7 +90,7 @@ int download_from_mirror(const char *mirror, const char *file_name)
 
     // Construction du chemin vers le cache (Local)
     static char dir_name[PATH_MAX_LEN];
-    snprintf(dir_name, sizeof(dir_name), "cache/%s", file_name);
+    snprintf(dir_name, sizeof(dir_name), "%s", file_name);
     char *output_path = generate_path(PACKX_CACHE_DIR, dir_name);
     printf("TO PATH: %s\n", output_path);
 
@@ -161,11 +162,13 @@ int mirror_check(void)
     }
 
     // Vérifier la signature
-    if (verify_signature("/home/rudy/.packx/cache/repo.db", "/home/rudy/.packx/cache/repo.db.sig", "/home/rudy/.packx/keyring") == 0) {
-        printf("Vérification réussie\n");
+    char *repo_path = generate_path(PACKX_CACHE_DIR, "repo.db");
+    char *sig_repo_path = generate_path(PACKX_CACHE_DIR, "repo.db.sig");
+    if (verify_signature(repo_path, sig_repo_path, PACKX_KEYRING_DIR) == 0) {
+        printf(SUCCES"Vérification de la sigature du dépot réussie!\n"NORMAL);
         return 0;
     } else {
-        printf("Vérification échouée\n");
+        printf(ERROR"Vérification de la signature du dépot échouée!\n");
         return 1;
     }
 

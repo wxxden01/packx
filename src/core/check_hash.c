@@ -6,16 +6,14 @@
 #include "check_hash.h"
 #include "packages.h"
 #include "path_builder.h"
+#include "packx_color.h"
 
 #define PATH_MAX_LEN 256
 
 // Génère le hash en SHA256 d'un paquet donné
 int hash_generator_SHA256(char *pkg_name, char *output_hash)
 {
-    static char file_path[PATH_MAX_LEN];
-    const char location[6] = "cache";
-    snprintf(file_path, sizeof(file_path), "%s/%s", location, pkg_name);
-    char *output_path = generate_path(PACKX_CACHE_DIR, file_path);
+    char *output_path = generate_path(PACKX_CACHE_DIR, pkg_name);
 
     FILE *file = fopen(output_path, "rb");
     if (!file)
@@ -93,9 +91,9 @@ int check_SHA256(char *pkg_name)
     if (strcmp(pkg_data.hash, hash_generate) != 0)
     {
         // supprimer l'archive
-        printf("Les hash ne sont pas identique, par soucis d'intégrité nous ne pouvons pas installer le paquet demander!\n");
+        printf(ERROR"Les hash ne sont pas identique, par soucis d'intégrité nous ne pouvons pas installer le paquet demander!\n"NORMAL);
+        printf("Hash de référence : %s\nHash généré : %s\n", pkg_data.hash, hash_generate);
         return -1;
     }
-    
     return 0;
 }
