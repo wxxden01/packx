@@ -14,6 +14,6 @@ int hash_generator_SHA256(char *pkg_name, char *output_hash);
  * @param pkg_name Nom du paquet que l'on souhaite vérifier
  * @return 0 pour succés, -1 pour échec
  */
-int check_SHA256(char *pkg_name);
+int check_SHA256(char *pkg_name, char *pkg_hash);
 
 #endif

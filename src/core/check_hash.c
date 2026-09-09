@@ -73,26 +73,22 @@ int hash_generator_SHA256(char *pkg_name, char *output_hash)
     return 0;
 }
 
-int check_SHA256(char *pkg_name)
+int check_SHA256(char *pkg_name, char *pkg_hash)
 {
-    // Récupération des info de paquet sur la bdd du mirroir
-    package_t pkg_data;
-    pkg_finder(2, pkg_name, &pkg_data);
-
     // Génération de hash du paquet téléchargé 
     char hash_generate[257];
-    if (hash_generator_SHA256(pkg_data.full_name, hash_generate))
+    if (hash_generator_SHA256(pkg_name, hash_generate))
     {
         printf("Problème lors du hachage!\n");
         return -1;
     }
 
     // Vérification avec le hash de référence
-    if (strcmp(pkg_data.hash, hash_generate) != 0)
+    if (strcmp(pkg_hash, hash_generate) != 0)
     {
         // supprimer l'archive
         printf(ERROR"Les hash ne sont pas identique, par soucis d'intégrité nous ne pouvons pas installer le paquet demander!\n"NORMAL);
-        printf("Hash de référence : %s\nHash généré : %s\n", pkg_data.hash, hash_generate);
+        printf("Hash de référence : %s\nHash généré : %s\n", pkg_hash, hash_generate);
         return -1;
     }
     return 0;
