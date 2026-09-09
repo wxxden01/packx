@@ -19,7 +19,7 @@ PACKX est un gestionnaire de paquets minimaliste conçu pour les distributions L
 - **Simplicité** : Code C propre et compréhensible
 - **Légèreté** : Dépendances minimales
 - **Transparence** : Format de base de données lisible
-- **Sécurité** : Vérification GPG + MD5
+- **Sécurité** : Vérification GPG + SHA256
 
 ## Fonctionnalités
 
@@ -44,10 +44,10 @@ git clone https://github.com/wxxden01/packx.git
 cd packx
 
 # Compiler
-make
+sudo make install
 
 # L'exécutable se trouve dans build/
-./build/packx -h
+packx -h
 ```
 
 # Etat
