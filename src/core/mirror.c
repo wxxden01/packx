@@ -16,7 +16,7 @@
 // Vérifie qu'au moins un mirroir est définit
 int check_mirror_list()
 {
-    static const char *mirror_file = "mirror.txt"; 
+    static const char *mirror_file = "mirror.conf"; 
     char *full_path = generate_path(PACKX_CONFIG_DIR, mirror_file);
 
     FILE *file = fopen(full_path, "r");
@@ -40,7 +40,7 @@ int check_mirror_list()
 // choisir le mirroir à partir de la liste des mirroirs définit
 char *select_mirror()
 {
-    static const char *mirror_file = "mirror.txt"; 
+    static const char *mirror_file = "mirror.conf"; 
     char *full_path = generate_path(PACKX_CONFIG_DIR, mirror_file);
 
     FILE *file = fopen(full_path, "r");
@@ -80,8 +80,8 @@ int download_from_mirror(const char *mirror, const char *file_name)
     FILE *fp;
 
     // Construction de chemin vers le certificats du serveur
-    const char *certificate_file = "certs/nginx-selfsigned.crt";
-    char *certificate_file_path = generate_path(PACKX_CONFIG_DIR, certificate_file);
+    // const char *certificate_file = "certs/nginx-selfsigned.crt";
+    // char *certificate_file_path = generate_path(PACKX_CONFIG_DIR, certificate_file);
 
     // Construction du chemin vers le repo du miroir (Distant)
     static char url_db_mirror[PATH_MAX_LEN];
@@ -108,7 +108,7 @@ int download_from_mirror(const char *mirror, const char *file_name)
         curl_easy_setopt(curl, CURLOPT_URL, url_db_mirror);
 
         // Récupère le certificat du serveur
-        curl_easy_setopt(curl, CURLOPT_CAINFO, certificate_file_path);
+        // curl_easy_setopt(curl, CURLOPT_CAINFO, certificate_file_path);
 
         // Enregistrer le callback qui écrit dans le fichier
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_to_file);
