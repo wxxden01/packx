@@ -7,6 +7,7 @@
 #include "version.h"
 #include "packages.h"
 #include "commands.h"
+#include "packx_color.h"
 
 #define PATH_MAX_LEN 256
 
@@ -16,7 +17,7 @@ int packx_help(int argc, char **argv)
     {
         printf("%s", PACKX_VERSION);
         printf("PACKX est un gestionnaire de paquet en ligne de commande!\n\n");
-        printf("Liste des commandes disponible pour packx:\n\n");
+        printf(BOLD"Liste des commandes disponible pour packx:\n"NORMAL);
 
         for (size_t i  = 0; commands[i].name != NULL; i++) {
             printf("  %-26s %s\n",
