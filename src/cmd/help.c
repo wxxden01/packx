@@ -18,16 +18,11 @@ int packx_help(int argc, char **argv)
         printf("PACKX est un gestionnaire de paquet en ligne de commande!\n\n");
         printf("Liste des commandes disponible pour packx:\n\n");
 
-        for (size_t i  = 0; commands[i].name != NULL; i++)
-        {
-            printf(" %s - %s\n", commands[i].name, commands[i].desc);
+        for (size_t i  = 0; commands[i].name != NULL; i++) {
+            printf("  %-26s %s\n",
+                commands[i].name,
+                commands[i].desc);
         }
-        
-        // Ancienne version 
-        // printf(" -h                - Sans argument, affiche la liste des commandes disponible; Suivit d'un argument (nom de paquet), les détailles de ce dernier seront affichés.\n");
-        // printf(" install <package> - Installe le paquet demandé.\n");
-        // printf(" remove <package>  - Supprime le paquet demandé.\n");
-        // printf(" update            - Sans argument, met à jour le système complet; Suivit d'un argument (nom de paquet), ce dernier sera mit à jour.\n");
 
         printf("\nDéveloppeurs du projet : \n Rudy DANIEL - @WXXDEN\n");
     }
