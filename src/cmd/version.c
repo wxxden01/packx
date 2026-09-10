@@ -37,7 +37,7 @@ int packx_version(int argc, char **argv)
 
         package_t pkg;
         // On passe full_path (chemin complet) et le nom du paquet recherché
-        if (pkg_finder(1, pkg_selected, &pkg) != 0)
+        if (pkg_finder(1, pkg_selected, &pkg) == -1)
         {
             printf(ERROR "Paquet %s non trouvé!\n"FILE_COLOR"%s"NORMAL" ne semble pas être installé sur votre machine!\n" NORMAL, pkg_selected, pkg_selected);
             return 1;
