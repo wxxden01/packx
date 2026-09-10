@@ -6,6 +6,7 @@
 #define WARNING "\033[33m"
 #define FILE_COLOR "\e[34m"
 
+#define BOLD "\033[1m"
 #define NORMAL "\e[0m"
 
 #endif

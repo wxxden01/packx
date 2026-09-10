@@ -5,7 +5,7 @@
 
 ### 1 - Avoir accés à un miroir
     - Le setup si besoin
-    - Ajouter l'url du mirroir dans le fichier ~/.packx/mirror.txt
+    - Ajouter l'url du mirroir dans le fichier /etc/packx/mirror.txt
 
     - Sur le mirroir:
         - Fichier `repo.db`, format : test|8.6.2|test-8.6.2.tar.xz|HASH|SIZE
@@ -31,14 +31,13 @@
 
 ## Phase 1:
 - [x] Vérifier que le paquet n'est pas déjà installé
-- [x] Ajouter ~/.packx/cache, ~/.packx/pkgs
 - [x] Download depuis le miroir avec Libcurl
 - [x] Vérifier la signature de la db
 - [x] Vérifier que l'archive est sur le mirroir
 - [x] Télécharger l'archive
-- [ ] Comparer les hash
+- [x] Comparer les hash
 - [ ] Faire l'installation
-- [ ] l'inscrire dans le fichier ~/.packx/installed.db (format : nom|version|nom-v.tar.xz|HASH|size)
+- [ ] l'inscrire dans le fichier /var/lib/packx/installed.db (format : nom|version|nom-v.tar.xz|HASH|size)
 ---
 
 ## Comportement de la commande:
