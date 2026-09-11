@@ -23,7 +23,7 @@ size_t write_to_file(void *contents, size_t size, size_t nmemb, void *userp);
  * @param mirror Nom du miroir à utiliser
  * @param file_name Archive à télécharger
  */
-int download_from_mirror(const char *mirror, const char *file_name);
+int download_from_mirror(const char *mirror, const char *dir, const char *file_name);
 
 /**
  * @brief Réalise une série de testes pour pouvoir établire une connection au miroir

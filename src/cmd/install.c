@@ -55,7 +55,7 @@ int packx_install(int argc, char **argv)
         return -1;
     }
 
-    if (download_from_mirror(mirror, pkg_data.full_name) != 0)
+    if (download_from_mirror(mirror, "packx-repo/x86_64/pkgs", pkg_data.full_name) != 0)
     {
         printf("erreur dw repo\n");
         return -1;

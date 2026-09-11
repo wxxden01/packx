@@ -16,7 +16,7 @@
 // Vérifie qu'au moins un mirroir est définit
 int check_mirror_list()
 {
-    static const char *mirror_file = "mirror.txt"; 
+    static const char *mirror_file = "mirror.conf"; 
     char *full_path = generate_path(PACKX_CONFIG_DIR, mirror_file);
 
     FILE *file = fopen(full_path, "r");
@@ -40,7 +40,7 @@ int check_mirror_list()
 // choisir le mirroir à partir de la liste des mirroirs définit
 char *select_mirror()
 {
-    static const char *mirror_file = "mirror.txt"; 
+    static const char *mirror_file = "mirror.conf"; 
     char *full_path = generate_path(PACKX_CONFIG_DIR, mirror_file);
 
     FILE *file = fopen(full_path, "r");
@@ -72,64 +72,73 @@ size_t write_to_file(void *contents, size_t size, size_t nmemb, void *userp) {
     return written;
 }
 
-// Vérifier que le paquet est disponible sur le mirroir
-int download_from_mirror(const char *mirror, const char *file_name)
-{
+int download_from_mirror(const char *mirror, const char *dir, const char *file_name) {
     CURL *curl;
     CURLcode res;
     FILE *fp;
+    long http_code = 0; // Variable pour stocker le code HTTP
 
-    // Construction de chemin vers le certificats du serveur
-    const char *certificate_file = "certs/nginx-selfsigned.crt";
-    char *certificate_file_path = generate_path(PACKX_CONFIG_DIR, certificate_file);
-
-    // Construction du chemin vers le repo du miroir (Distant)
-    static char url_db_mirror[PATH_MAX_LEN];
-    snprintf(url_db_mirror, sizeof(url_db_mirror), "%s/%s", mirror, file_name);
+    char url_db_mirror[PATH_MAX_LEN];
+    snprintf(url_db_mirror, sizeof(url_db_mirror), "%s/%s/%s", mirror, dir, file_name);
     printf("FROM URL: %s\n", url_db_mirror);
 
-    // Construction du chemin vers le cache (Local)
-    static char dir_name[PATH_MAX_LEN];
+    char dir_name[PATH_MAX_LEN];
     snprintf(dir_name, sizeof(dir_name), "%s", file_name);
+    
+    // Supposons que generate_path alloue de la mémoire (malloc/strdup)
     char *output_path = generate_path(PACKX_CACHE_DIR, dir_name);
     printf("TO PATH: %s\n", output_path);
 
+    // 1. Ouvrir le fichier
     fp = fopen(output_path, "wb");
-    if (fp == NULL)
-    {
-        fprintf(stderr, "Impossible d'ouvrir %s en écriture\n", output_path);
+    if (fp == NULL) {
+        fprintf(stderr, "ERREUR: Impossible d'ouvrir %s en écriture (vérifie que le dossier existe)\n", output_path);
+        free(output_path); // Évite la fuite mémoire
         return -1;
     }
     
     curl = curl_easy_init();
-    if (curl)
-    {
-        // Définition de l'url sur lequel on travail
+    if (curl) {
         curl_easy_setopt(curl, CURLOPT_URL, url_db_mirror);
-
-        // Récupère le certificat du serveur
-        curl_easy_setopt(curl, CURLOPT_CAINFO, certificate_file_path);
-
-        // Enregistrer le callback qui écrit dans le fichier
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_to_file);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
-
-        // Suivre les redirections
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
+
 
         // Exécuter le téléchargement
         res = curl_easy_perform(curl);
-        if (res != CURLE_OK)
-        {
-            fprintf(stderr, "Echec du téléchargement: %s\n", curl_easy_strerror(res));
+        
+        if (res != CURLE_OK) {
+            fprintf(stderr, "ERREUR CURL: %s\n", curl_easy_strerror(res));
             fclose(fp);
             curl_easy_cleanup(curl);
+            remove(output_path); // Nettoie le fichier vide/corrompu
+            free(output_path);
             return -1;
         }
+
+        // Vérifier que le serveur a bien répondu 200 OK
+        curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &http_code);
+        if (http_code != 200) {
+            fprintf(stderr, "ERREUR HTTP: Le serveur a répondu %ld (et non 200)\n", http_code);
+            fclose(fp);
+            curl_easy_cleanup(curl);
+            remove(output_path); // Nettoie le fichier vide/corrompu
+            free(output_path);
+            return -1;
+        }
+
         curl_easy_cleanup(curl);
+    } else {
+        fprintf(stderr, "ERREUR: Échec de l'initialisation de CURL\n");
+        fclose(fp);
+        free(output_path);
+        return -1;
     }
     
     fclose(fp);
+    free(output_path); // Libère la mémoire allouée par generate_path
+    
     return 0;
 }
 
@@ -149,13 +158,13 @@ int mirror_check(void)
     }
 
     // Télécharge le fichier repo.db ainsi que sa signature
-    if (download_from_mirror(mirror, "repo.db") != 0)
+    if (download_from_mirror(mirror, "packx-repo/x86_64", "repo.db") != 0)
     {
         printf("erreur dw repo\n");
         return -1;
     }
 
-    if (download_from_mirror(mirror, "repo.db.sig") != 0)
+    if (download_from_mirror(mirror, "packx-repo/x86_64", "repo.db.sig") != 0)
     {
         printf("erreur dw sig repo!\n");
         return -1;
