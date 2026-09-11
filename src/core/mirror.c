@@ -72,16 +72,14 @@ size_t write_to_file(void *contents, size_t size, size_t nmemb, void *userp) {
     return written;
 }
 
-int download_from_mirror(const char *mirror, const char *file_name) {
+int download_from_mirror(const char *mirror, const char *dir, const char *file_name) {
     CURL *curl;
     CURLcode res;
     FILE *fp;
     long http_code = 0; // Variable pour stocker le code HTTP
 
-    // REMARQUE : Évite 'static' ici. Cela garde l'état entre les appels 
-    // et peut causer des bugs étranges ou des problèmes de thread-safety.
     char url_db_mirror[PATH_MAX_LEN];
-    snprintf(url_db_mirror, sizeof(url_db_mirror), "%s/%s", mirror, file_name);
+    snprintf(url_db_mirror, sizeof(url_db_mirror), "%s/%s/%s", mirror, dir, file_name);
     printf("FROM URL: %s\n", url_db_mirror);
 
     char dir_name[PATH_MAX_LEN];
@@ -106,8 +104,6 @@ int download_from_mirror(const char *mirror, const char *file_name) {
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
 
-        // Active le mode verbeux pour voir EXACTEMENT ce qui se passe
-        curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
 
         // Exécuter le téléchargement
         res = curl_easy_perform(curl);
@@ -143,7 +139,6 @@ int download_from_mirror(const char *mirror, const char *file_name) {
     fclose(fp);
     free(output_path); // Libère la mémoire allouée par generate_path
     
-    printf("SUCCÈS: Fichier téléchargé et sauvegardé.\n");
     return 0;
 }
 
@@ -163,13 +158,13 @@ int mirror_check(void)
     }
 
     // Télécharge le fichier repo.db ainsi que sa signature
-    if (download_from_mirror(mirror, "repo.db") != 0)
+    if (download_from_mirror(mirror, "packx-repo/x86_64", "repo.db") != 0)
     {
         printf("erreur dw repo\n");
         return -1;
     }
 
-    if (download_from_mirror(mirror, "repo.db.sig") != 0)
+    if (download_from_mirror(mirror, "packx-repo/x86_64", "repo.db.sig") != 0)
     {
         printf("erreur dw sig repo!\n");
         return -1;

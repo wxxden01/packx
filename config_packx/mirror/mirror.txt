@@ -1,2 +1,1 @@
-https://packx.rv0.fr/x86_64
-https://192.168.1.30/x86_64
+https://packx.rv0.fr
