@@ -7,6 +7,7 @@
 #include "check_hash.h"
 #include "has_sudo.h"
 #include "packx_color.h"
+#include "config.h"
 
 package_t pkg_data;
 
@@ -66,6 +67,12 @@ int packx_install(int argc, char **argv)
         return -1;
     }
     printf(SUCCES"Intégrité du paquet vérifier!\n"NORMAL);
+    
+    if (check_var() != 0)
+    {
+        printf("err /etc/profile.d/packx.sh!\n");
+        return -1;
+    }
     
     return 1;
 }
