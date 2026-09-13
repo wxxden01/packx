@@ -53,7 +53,8 @@ int check_var(void)
             return -1;
         }
         chmod(full_path, 0755);
-        fprintf(new_file, "export PACKX_SOURCE='/usr/bin'");
+        const char *path = "/usr/bin";
+        fprintf(new_file, "export PACKX_BIN_DIR=\"%s\"\n", path);
         fclose(new_file);
     }else{
         fclose(file);

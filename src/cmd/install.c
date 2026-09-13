@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <string.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <sys/wait.h>
 
+#include "path.h"
 #include "path_builder.h"
 #include "mirror.h"
 #include "packages.h"
@@ -8,6 +12,7 @@
 #include "has_sudo.h"
 #include "packx_color.h"
 #include "config.h"
+#include "decompress.h"
 
 package_t pkg_data;
 
@@ -73,6 +78,29 @@ int packx_install(int argc, char **argv)
         printf("err /etc/profile.d/packx.sh!\n");
         return -1;
     }
+
+    char *archive_path = generate_path(PACKX_CACHE_DIR, pkg_data.full_name);
+    chmod(archive_path, 0755);
+    if (decompress(archive_path) != 0)
+    {
+        printf("Erreur à la décompression de l'archive!\n");
+    }
     
+    pid_t pid = fork();
+    if (pid == 0) {
+        // Processus fils
+        // char *file_p = generate_path("pkgs", pkg_data.name);
+        // char *bash_path = generate_path(PACKX_CACHE_DIR, file_p);
+        execl("/bin/bash", "bash", "/var/cache/packx/btop/scripts/install.sh", NULL);
+        perror("execl"); // S'exécute seulement si execl échoue
+        return -1;
+    } else if (pid > 0) {
+        // Processus père
+        int status;
+        wait(&status); // Attend la fin du fils
+        printf("Script terminé avec le statut %d\n", WEXITSTATUS(status));
+    } else {
+        perror("fork");
+    }
     return 1;
 }
