@@ -14,6 +14,8 @@
 #include "config.h"
 #include "decompress.h"
 
+#define PATH_MAX_LEN 256
+
 package_t pkg_data;
 
 int packx_install(int argc, char **argv)
@@ -47,9 +49,10 @@ int packx_install(int argc, char **argv)
     }
 
     // Vérifier si l'archive existe sur le mirroir
-    if (pkg_finder(2, pkg_selected, &pkg_data) == 0)
+    if (pkg_finder(2, pkg_selected, &pkg_data))
     {
         printf("Le paquet %s n'est pas disponible sur ce miroir ou n'existe pas!\nVérifier l'hortograhe et réssayer!\n", pkg_selected);
+        printf("%s\n", pkg_data.name);
         return -1;
     }
     printf("Paquet %s disponible sur le miroir!\n", pkg_selected);
@@ -63,7 +66,7 @@ int packx_install(int argc, char **argv)
 
     if (download_from_mirror(mirror, "packx-repo/x86_64/pkgs", pkg_data.full_name) != 0)
     {
-        printf("erreur dw repo\n");
+        printf("erreur dw archive!\n");
         return -1;
     }
     // Vérifie le hash du paquet
@@ -89,9 +92,9 @@ int packx_install(int argc, char **argv)
     pid_t pid = fork();
     if (pid == 0) {
         // Processus fils
-        // char *file_p = generate_path("pkgs", pkg_data.name);
-        // char *bash_path = generate_path(PACKX_CACHE_DIR, file_p);
-        execl("/bin/bash", "bash", "/var/cache/packx/btop/scripts/install.sh", NULL);
+        char bash_path[PATH_MAX_LEN];
+        snprintf(bash_path ,PATH_MAX_LEN, "%s/%s/scripts/install.sh", PACKX_CACHE_DIR, pkg_data.name);
+        execl("/bin/bash", "bash", bash_path, NULL);
         perror("execl"); // S'exécute seulement si execl échoue
         return -1;
     } else if (pid > 0) {
