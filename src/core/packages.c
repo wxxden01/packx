@@ -62,7 +62,24 @@ int pkg_finder(int source_db, const char *target_pkg, package_t *out_pkg) {
     return -1; // Non trouvé
 }
 
-// int pkg_installed()
-// {
+int pkg_installed(char *target_pkg)
+{
+    char *db_file_path = "/var/lib/packx/installed.db";
 
-// }
+    FILE *file = fopen(db_file_path, "r");
+    if (!file) {
+        perror(ERROR "Erreur lors de l'ouverture de la base de données" NORMAL);
+        return -1;
+    }
+
+    char pkg[64];
+    while (fgets(pkg, sizeof(pkg), file)) {
+        if (strcmp(pkg, target_pkg) == 0)
+        {
+            fclose(file);
+            return 0;
+        }
+    }
+    fclose(file);
+    return -1;
+}

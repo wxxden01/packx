@@ -37,7 +37,7 @@ int packx_install(int argc, char **argv)
     }
 
     // Vérifie que le paquet n'est pas installé
-    if (pkg_finder(1, pkg_selected, &pkg_data) == 0)
+    if (pkg_installed(pkg_selected) == 0)
     {
         printf(WARNING"Le paquet %s est déjà installé sur cette machine!\n"NORMAL, pkg_selected);
         return -1;
