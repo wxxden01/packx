@@ -47,11 +47,13 @@ int pkg_finder(int source_db, const char *target_pkg, package_t *out_pkg) {
     }
 
     char line[256];
+    package_t tmp_pkg; // Variable temporaire
     while (fgets(line, sizeof(line), file)) {
-        if (parse_line(line, out_pkg) == 0) {
-            if (strcmp(out_pkg->name, target_pkg)) {
+        if (parse_line(line, &tmp_pkg) == 0) {
+            if (strcmp(tmp_pkg.name, target_pkg) == 0) {
+                *out_pkg = tmp_pkg; // On recopie SEULEMENT quand c'est le bon
                 fclose(file);
-                return 0;
+                return 0; // Trouvé !
             }
         }
     }
