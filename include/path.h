@@ -5,6 +5,7 @@
 #define PACKX_CONFIG_DIR "/etc/packx"
 #define PACKX_KEYRING_DIR "/usr/share/packx/keyrings"
 #define PACKX_CACHE_DIR "/var/cache/packx"
+#define PACKX_PKG
 #define PACKX_DB_DIR "/var/lib/packx"
 
 #endif

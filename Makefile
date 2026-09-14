@@ -8,6 +8,7 @@ BINDIR = $(DESTDIR)$(PREFIX)/bin
 SYSCONFDIR = $(DESTDIR)/etc/packx
 DATADIR = $(DESTDIR)/usr/share/packx
 STATEDIR = $(DESTDIR)/var/lib/packx
+PKGS = $(DESTDIR)/var/lib/packx/pkgs
 CACHEDIR = $(DESTDIR)/var/cache/packx
 
 # Dossiers de build
@@ -19,7 +20,7 @@ BIN = $(BUILD_DIR)/$(NAME)
 # Compilateur et Flags
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -Iinclude -g $(shell pkg-config --cflags gpgme)
-LDLIBS = -lcurl -lcrypto $(shell pkg-config --libs gpgme)
+LDLIBS = -lcurl -lcrypto -larchive $(shell pkg-config --libs gpgme)
 
 # Outils système
 INSTALL = install
@@ -51,6 +52,7 @@ install: all
 	$(INSTALL_DIR) $(SYSCONFDIR)/certs
 	$(INSTALL_DIR) $(DATADIR)/keyrings
 	$(INSTALL_DIR) $(STATEDIR)
+	$(INSTALL_DIR) $(PKGS)
 	$(INSTALL) -m 1777 -d $(CACHEDIR)
 	$(INSTALL_DIR) $(BINDIR)
 

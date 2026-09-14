@@ -1,13 +1,11 @@
 #ifndef PACKAGES_H
 #define PACKAGES_H
-#include <stdbool.h>
 
 typedef struct {
     char name[32];
     char version[16];
     char full_name[64];
-    char size[16];
-    char hash[256];
+    char hash[144];
 } package_t;
 
 /**
