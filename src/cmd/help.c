@@ -44,8 +44,7 @@ int packx_help(int argc, char **argv)
             pkg_selected[sizeof(pkg_selected) - 1] = '\0';
         }
     
-        package_t pkg;
-        if (pkg_finder(1, pkg_selected, &pkg) == 0)
+        if (pkg_installed(pkg_selected) == 0)
         {
             printf("Aide demandé pour le paquet: %s\n", pkg_selected);
             return 0;

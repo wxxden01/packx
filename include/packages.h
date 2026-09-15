@@ -24,4 +24,6 @@ int parse_line(const char *line, package_t *pkg);
  */
 int pkg_finder(int source_db, const char *target_pkg, package_t *out_pkg);
 
+int pkg_installed(char *target_pkg);
+
 #endif 
