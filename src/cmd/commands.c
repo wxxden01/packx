@@ -7,18 +7,9 @@
 #include "search_packx.h"
 #include "version.h"
 #include "config.h"
+#include "remove.h"
 
 // TEMPORAIRE
-int packx_remove(int argc, char **argv)
-{
-    (void)argc;
-    (void)argv;
-    printf("Test ok!\n");
-
-    return 0;
-
-}
-
 int packx_update(int argc, char **argv)
 {
     (void)argc;
