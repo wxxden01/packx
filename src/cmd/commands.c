@@ -10,11 +10,9 @@
 #include "remove.h"
 
 // TEMPORAIRE
-int packx_update(int argc, char **argv)
+int packx_update(char *target_pkg)
 {
-    (void)argc;
-    (void)argv;
-    printf("Test ok!\n");
+    printf("Update %s!\n", target_pkg);
 
     return 0;
 }

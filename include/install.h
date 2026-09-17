@@ -1,1 +1,1 @@
-int packx_install(int argc, char **argv);
+int packx_install(char *target_pkg);

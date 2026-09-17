@@ -4,7 +4,7 @@
 typedef struct
 {
     const char *name;
-    int (*func)(int, char **);
+    int (*func)(char *);
     const char *desc;
 } command_packx;
 
