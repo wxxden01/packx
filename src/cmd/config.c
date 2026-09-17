@@ -5,6 +5,7 @@
 
 #include "mirror.h"
 #include "path_builder.h"
+#include "packx_color.h"
 
 char *check_linux_distro()
 {
@@ -64,10 +65,14 @@ int check_var(void)
     return 0;
 }
 
-int show_config(int argc, char **argv) 
+int show_config(char *target_pkg) 
 {
-    (void)argc;
-    (void)argv;
+    if (target_pkg != NULL)
+    {
+        printf("Mauvaise utilisation de la commande, aucun argument n'est attendue!\n");
+        return -1;
+    }
+    
     // afficher le miroir par défault
     char *default_mirror = select_mirror();
     if (default_mirror == NULL)

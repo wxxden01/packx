@@ -11,6 +11,6 @@
  * @param argv Argument précis
  * @return version du paquet ou de Packx
  */
-int packx_version(int argc, char **argv);
+int packx_version(char *target_pkg);
 
 #endif

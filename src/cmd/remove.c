@@ -9,23 +9,11 @@
 
 #define BUFFER 256
 
-int packx_remove(int argc, char **argv)
+int packx_remove(char *target_pkg)
 {
-    (void)argc;
-    char pkg_selected[32];
-    if (sudo(argv[0]))
-    {
-        printf("ok!\n");
-        return 0;
-    }else
-    {
-        printf(WARNING "Mauvaise utilisation de la commande! 'sudo packx remove <pkg>'\n" NORMAL);
-        return -1;
-    }
-
     char full_path[BUFFER];
     char *path = "/var/lib/packx/pkgs";
-    snprintf(full_path ,BUFFER, "%s/%s/scripts/remove.sh", path, pkg_selected);
+    snprintf(full_path ,BUFFER, "%s/%s/scripts/remove.sh", path, target_pkg);
 
     pid_t pid = fork();
     if (pid == 0) {
