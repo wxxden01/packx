@@ -5,6 +5,6 @@
  * @brief Renvoie si le paquet à été trouvé ou pas
  * @param argv[2]
  */
-int packx_search(int argc, char **argv);
+int packx_search(char *target_pkg);
 
 #endif

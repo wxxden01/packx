@@ -11,9 +11,9 @@
 
 #define PATH_MAX_LEN 256
 
-int packx_help(int argc, char **argv)
+int packx_help(char *target_pkg)
 {
-    if ((sudo(argv[0]) && argc <4) || (!sudo(argv[0]) && argc < 3))
+    if (target_pkg == NULL)
     {
         printf("%s", PACKX_VERSION);
         printf("PACKX est un gestionnaire de paquet en ligne de commande!\n\n");
@@ -26,31 +26,16 @@ int packx_help(int argc, char **argv)
         }
 
         printf("\nDéveloppeurs du projet : \n Rudy DANIEL - @WXXDEN\n");
-    }
-    else if ((sudo(argv[0]) && argc > 4) || (!sudo(argv[0]) && argc > 3))
+    }else
     {
-        printf("Mauvaise utilisation de la commande 'help'\nUtilisation : packx -h <pkg>\n");
-    }
     
-    else{
-        char pkg_selected[256];
-
-        // Check if argc has enough elements before accessing argv
-        if (sudo(argv[0])) {
-            strncpy(pkg_selected, argv[3], sizeof(pkg_selected) - 1);
-            pkg_selected[sizeof(pkg_selected) - 1] = '\0';
-        } else {
-            strncpy(pkg_selected, argv[2], sizeof(pkg_selected) - 1);
-            pkg_selected[sizeof(pkg_selected) - 1] = '\0';
-        }
-    
-        if (pkg_installed(pkg_selected) == 0)
+        if (pkg_installed(target_pkg) == 0)
         {
-            printf("Aide demandé pour le paquet: %s\n", pkg_selected);
+            printf("Aide demandé pour le paquet: %s\n", target_pkg);
             return 0;
         }
         
-        printf("%s est introuvable, vérifiez qu'il soit bien installer\n", pkg_selected);
+        printf("%s est introuvable, vérifiez qu'il soit bien installer\n", target_pkg);
     }
     return 0;
 }

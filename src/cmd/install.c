@@ -18,24 +18,15 @@
 
 package_t pkg_data;
 
-int packx_install(int argc, char **argv)
+int packx_install(char *pkg_selected)
 {
-    if ((sudo(argv[0]) && argc != 4) || (!sudo(argv[0]) && argc != 3))
+    // On s'assure que la commande est bien lancé en mode super utilisateur
+    if (sudo() == -1)
     {
-        printf(WARNING"Mauvaise utilisation de la commande! Cette commande doit être suivit d'un nom de paquet.\n"NORMAL);
+        printf(ERROR"Cette commande doit impérativement être lancé en tant que super utilisateur ou  avec 'sudo'!"NORMAL);
         return -1;
     }
     
-    char pkg_selected[256];
-    // Check if argc has enough elements before accessing argv
-    if (sudo(argv[0])) {
-        strncpy(pkg_selected, argv[3], sizeof(pkg_selected) - 1);
-        pkg_selected[sizeof(pkg_selected) - 1] = '\0';
-    } else {
-        strncpy(pkg_selected, argv[2], sizeof(pkg_selected) - 1);
-        pkg_selected[sizeof(pkg_selected) - 1] = '\0';
-    }
-
     // Vérifie que le paquet n'est pas installé
     if (pkg_installed(pkg_selected) == 0)
     {

@@ -64,10 +64,9 @@ int check_var(void)
     return 0;
 }
 
-int show_config(int argc, char **argv) 
+int show_config(char *target_pkg) 
 {
-    (void)argc;
-    (void)argv;
+    (void)target_pkg;
     // afficher le miroir par défault
     char *default_mirror = select_mirror();
     if (default_mirror == NULL)

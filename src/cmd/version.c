@@ -9,19 +9,9 @@
 
 #define PATH_MAX_LEN 256
 
-int packx_version(int argc, char **argv)
+int packx_version(char *target_pkg)
 {
-    // Case 1 : L'utilisateur tape juste "packx version" (2 arguments : argv[0] et argv[1])
-    if ((sudo(argv[0]) && argc == 3) || (!sudo(argv[0]) && argc == 2))
-    {
-        printf(SUCCES "PACKX version : %s\n" NORMAL, PACKX_VERSION);
-        return 0;
-    }
-    else
-    {
-        printf(WARNING "Mauvaise utilisation de la commande 'version'\nUtilisation : pack -v\n" NORMAL);
-        return -1;
-    }
-
+    (void)target_pkg;
+    printf(SUCCES "PACKX version : %s\n" NORMAL, PACKX_VERSION);
     return 0;
 }
