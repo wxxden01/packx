@@ -27,18 +27,21 @@ int main(int argc, char *argv[])
         // On récupère la commande
         char command[64] = {0};
         // On récupère le pkg si renseigné
-        char pkg_selected[64] = {0};
-        snprintf(pkg_selected, sizeof(pkg_selected), "%s", argv[2]);
+        char *pkg_selected = NULL;
+        if (argc > 2 && argv[2] != NULL && argv[2][0] != '\0') {
+            pkg_selected = argv[2];
+
+        }
 
         // Appeller la fonction associé
         snprintf(command, sizeof(command), "%s", argv[1]);
-         for (int i = 0; commands[i].name != NULL; i++)
+        for (int i = 0; commands[i].name != NULL; i++)
         {
             if (strcmp(command, commands[i].name) == 0){
                 return commands[i].func(pkg_selected);
             }
         }
-        printf("Commande %s introuvable!\n", argv[1]);
+        printf("Commande %s introuvable!\n", command);
     }
 
     return 0;   

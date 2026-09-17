@@ -6,10 +6,14 @@
 #include "packages.h"
 #include "packx_color.h"
 
-#define PATH_MAX_LEN 256
-
 int packx_search(char *target_pkg)
 {
+    if (target_pkg == NULL)
+    {
+        printf(WARNING"Mauvaise utilisation de la commande 'search', Aucun paquet spécifié!\n"BOLD"Utilisation : packx -v <pkg>"NORMAL);
+        return -1;
+    }
+    
     if (pkg_installed(target_pkg) != 0)
     {
         printf("Le paquet %s n'a pas été trouvé!\n",target_pkg);

@@ -26,6 +26,11 @@ int packx_install(char *pkg_selected)
         printf(ERROR"Cette commande doit impérativement être lancé en tant que super utilisateur ou  avec 'sudo'!"NORMAL);
         return -1;
     }
+    if (pkg_selected == NULL)
+    {
+        printf(WARNING"Mauvaise utilisation de la commande 'install'\n"BOLD"Utilisation : sudo packx install <pkg>"NORMAL);
+        return -1;
+    }
     
     // Vérifie que le paquet n'est pas installé
     if (pkg_installed(pkg_selected) == 0)
