@@ -22,7 +22,7 @@
 ---
 
 ## Phase 2 — Gestion de paquets
-- [ ] Implémenter  `packx install <pkg>` ([ROADMAP](/src/cmd/install.md))
+- [x] Implémenter  `packx install <pkg>` ([ROADMAP](/src/cmd/install.md))
 - [ ] Implémenter `packx remove <pkg>`
 - [ ] Implémenter `packx list`
 - [x] Créer une base locale (fichier `.packx/db`)

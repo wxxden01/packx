@@ -36,8 +36,8 @@
 - [x] Vérifier que l'archive est sur le mirroir
 - [x] Télécharger l'archive
 - [x] Comparer les hash
-- [ ] Faire l'installation
-- [ ] l'inscrire dans le fichier /var/lib/packx/installed.db (format : nom|version|nom-v.tar.xz|HASH|size)
+- [x] Faire l'installation
+- [x] l'inscrire dans le fichier /var/lib/packx/installed.db
 ---
 
 ## Comportement de la commande:
